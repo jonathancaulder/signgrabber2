@@ -118,6 +118,42 @@ function getLocation() {
           });
             item.image = getUrlResult.url;
         }
+        if (item.image2) {
+          const getUrlResult = await getUrl({
+            key: item.image2,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image2 = getUrlResult.url;
+        }
+        if (item.image3) {
+          const getUrlResult = await getUrl({
+            key: item.image3,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image3 = getUrlResult.url;
+        }
+        if (item.image4) {
+          const getUrlResult = await getUrl({
+            key: item.image4,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image4 = getUrlResult.url;
+        }
+        if (item.image5) {
+          const getUrlResult = await getUrl({
+            key: item.image5,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image5 = getUrlResult.url;
+        }
         return item;
       })
     );
@@ -569,6 +605,12 @@ async function updateItem(event){
       </SplideSlide>
       <SplideSlide>
         <img src={item.image3} alt="Image 3" style={styles}/>
+      </SplideSlide>
+      <SplideSlide>
+        <img src={item.image4} alt="Image 4" style={styles}/>
+      </SplideSlide>
+      <SplideSlide>
+        <img src={item.image5} alt="Image 5" style={styles}/>
       </SplideSlide>
     </Splide>
       <View padding="xs">
