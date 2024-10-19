@@ -1,6 +1,8 @@
 import React, { useState, useEffect } from "react";
 import "./App.css";
 import "@aws-amplify/ui-react/styles.css";
+import "@splidejs/splide/css";
+import { Splide , SplideSlide} from "@splidejs/react-splide";
 import { generateClient } from "aws-amplify/api";
 //import {StorageManager} from '@aws-amplify/ui-react-storage';
 import { uploadData} from 'aws-amplify/storage';
@@ -43,6 +45,11 @@ Amplify.configure(amplifyconfig);
 const client = generateClient();
 var curLongitude;
 var curLatitude;
+const styles = {
+  height: '100%',
+  width: '100%',
+  objectFit: 'contain',
+};
 
 const App = ({ signOut }) => {
   const [items, setItems] = useState([]);
@@ -543,10 +550,27 @@ async function updateItem(event){
       maxWidth="100%"
       variation="outlined"
     >
-      <Image
+      {/* <Image
         src={item.image}
         alt=""
-      />
+      /> */}
+      <Splide
+      options={ {
+        rewind: true,
+        gap   : '1rem',
+      } }
+      aria-label="My Favorite Images"
+    >
+      <SplideSlide>
+        <img src={item.image} alt="Image 1" style={styles}/>
+      </SplideSlide>
+      <SplideSlide>
+        <img src={item.image2} alt="Image 2" style={styles}/>
+      </SplideSlide>
+      <SplideSlide>
+        <img src={item.image3} alt="Image 3" style={styles}/>
+      </SplideSlide>
+    </Splide>
       <View padding="xs">
       <Flex>
           
