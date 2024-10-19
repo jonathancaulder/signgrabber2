@@ -1,0 +1,23 @@
+{
+  "staging": {
+    "awscloudformation": {
+      "AuthRoleName": "amplify-signgrabber2-staging-e63df-authRole",
+      "UnauthRoleArn": "arn:aws:iam::596121748167:role/amplify-signgrabber2-staging-e63df-unauthRole",
+      "AuthRoleArn": "arn:aws:iam::596121748167:role/amplify-signgrabber2-staging-e63df-authRole",
+      "Region": "us-east-1",
+      "DeploymentBucketName": "amplify-signgrabber2-staging-e63df-deployment",
+      "UnauthRoleName": "amplify-signgrabber2-staging-e63df-unauthRole",
+      "StackName": "amplify-signgrabber2-staging-e63df",
+      "StackId": "arn:aws:cloudformation:us-east-1:596121748167:stack/amplify-signgrabber2-staging-e63df/2d518d80-8dae-11ef-bcf0-0affe9a4475b",
+      "AmplifyAppId": "d3jaxnz8quil1t"
+    },
+    "categories": {
+      "auth": {
+        "signGrabber2": {}
+      },
+      "api": {
+        "signGrabber2": {}
+      }
+    }
+  }
+}

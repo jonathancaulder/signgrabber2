@@ -1,0 +1,26 @@
+type Item @model @auth(rules: [{allow: public}])
+{
+  id: ID!
+  title: String
+  description: String
+  email: String! 
+  phone: String
+  text: String
+  url: String
+  price: String
+  status: String
+  latitude: Int! @index(name: "byLatitudeAndLongitude", sortKeyFields: ["longitude"], queryField: "itemByLatitudeAndLongitude")
+  longitude: Int!
+  image: String
+  bucketkey: String
+  image2: String
+  bucketkey2: String
+  image3: String
+  bucketkey3: String
+  image4: String
+  bucketkey4: String
+  image5: String
+  bucketkey5: String
+  category: String!
+  userid: String! @index
+}

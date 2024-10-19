@@ -1,0 +1,14 @@
+{
+  "resourceName": "s3signgrabber2storage1a4cab3f",
+  "bucketName": "signgrabber2-storage-1a4cab3f",
+  "policyUUID": "e60015c3",
+  "storageAccess": "authAndGuest",
+  "guestAccess": [
+    "READ"
+  ],
+  "authAccess": [
+    "CREATE_AND_UPDATE",
+    "READ",
+    "DELETE"
+  ]
+}
