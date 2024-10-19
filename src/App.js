@@ -46,7 +46,7 @@ var curLatitude;
 
 const App = ({ signOut }) => {
   const [items, setItems] = useState([]);
-  const [userAction, setUserAction] = useState("menu");
+  const [userAction, setUserAction] = useState("search");
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
 
@@ -179,10 +179,10 @@ async function updateItem(event){
     event.preventDefault();
     const form = new FormData(event.target);
     const image = form.get("image");
-    //const image2 = form.get("image2");
-    //const image3 = form.get("image3");
-    //const image4 = form.get("image4");
-    //const image5 = form.get("image5");
+    const image2 = form.get("image2");
+    const image3 = form.get("image3");
+    const image4 = form.get("image4");
+    const image5 = form.get("image5");
     const { username, userId, signInDetails } = await getCurrentUser();
     //alert(userId);
     
@@ -193,10 +193,10 @@ async function updateItem(event){
       latitude: curLatitude,
       longitude: curLongitude,
       image: image.name,
-      //image2: image2.name,
-      //image3: image3.name,
-      //image4: image4.name,
-      //image5: image5.name,
+      image2: image2.name,
+      image3: image3.name,
+      image4: image4.name,
+      image5: image5.name,
       email: form.get("email"),
       phone: form.get("phone"),
       text: form.get("text"),
@@ -222,78 +222,78 @@ async function updateItem(event){
         }
       }).result;
     }
-    // if (!!data.image2) 
-    // {
-    //   const { v4: uuidv4 } = require('uuid');
-    //   var fileName2;
-    //   fileName2 = uuidv4();
-    //   fileName2 += ".jpg";
-    //   data.image2 = fileName2;
-    //   data.bucketkey2 = fileName2;
+    if (!!data.image2) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName2;
+      fileName2 = uuidv4();
+      fileName2 += ".jpg";
+      data.image2 = fileName2;
+      data.bucketkey2 = fileName2;
 
-    //   const result = await uploadData({
-    //     key: fileName2,
-    //     data: image2,
-    //     options: {
-    //       accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
-    //       //onProgress // Optional progress callback.
-    //     }
-    //   }).result;
-    // }
-    // if (!!data.image3) 
-    // {
-    //   const { v4: uuidv4 } = require('uuid');
-    //   var fileName3;
-    //   fileName3 = uuidv4();
-    //   fileName3 += ".jpg";
-    //   data.image3 = fileName3;
-    //   data.bucketkey3 = fileName3;
+      const result = await uploadData({
+        key: fileName2,
+        data: image2,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image3) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName3;
+      fileName3 = uuidv4();
+      fileName3 += ".jpg";
+      data.image3 = fileName3;
+      data.bucketkey3 = fileName3;
 
-    //   const result = await uploadData({
-    //     key: fileName3,
-    //     data: image3,
-    //     options: {
-    //       accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
-    //       //onProgress // Optional progress callback.
-    //     }
-    //   }).result;
-    // }
-    // if (!!data.image4) 
-    // {
-    //   const { v4: uuidv4 } = require('uuid');
-    //   var fileName4;
-    //   fileName4 = uuidv4();
-    //   fileName4 += ".jpg";
-    //   data.image4 = fileName4;
-    //   data.bucketkey4 = fileName4;
+      const result = await uploadData({
+        key: fileName3,
+        data: image3,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image4) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName4;
+      fileName4 = uuidv4();
+      fileName4 += ".jpg";
+      data.image4 = fileName4;
+      data.bucketkey4 = fileName4;
 
-    //   const result = await uploadData({
-    //     key: fileName4,
-    //     data: image4,
-    //     options: {
-    //       accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
-    //       //onProgress // Optional progress callback.
-    //     }
-    //   }).result;
-    // }
-    // if (!!data.image5) 
-    // {
-    //   const { v4: uuidv4 } = require('uuid');
-    //   var fileName5;
-    //   fileName5 = uuidv4();
-    //   fileName5 += ".jpg";
-    //   data.image5 = fileName5;
-    //   data.bucketkey5 = fileName5;
+      const result = await uploadData({
+        key: fileName4,
+        data: image4,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image5) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName5;
+      fileName5 = uuidv4();
+      fileName5 += ".jpg";
+      data.image5 = fileName5;
+      data.bucketkey5 = fileName5;
 
-    //   const result = await uploadData({
-    //     key: fileName5,
-    //     data: image5,
-    //     options: {
-    //       accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
-    //       //onProgress // Optional progress callback.
-    //     }
-    //   }).result;
-    // }
+      const result = await uploadData({
+        key: fileName5,
+        data: image5,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
     await client.graphql({
       query: createItemMutation,
       variables: { input: data },
@@ -369,7 +369,7 @@ async function updateItem(event){
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
         <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>
       </Menu>
-       <Heading level={1}>signHook</Heading>
+       <Heading level={1}>signGrabber</Heading>
 {userAction == "menu" &&
   <Heading padding="medium">Please select a menu option from above</Heading>
 }
@@ -467,7 +467,7 @@ async function updateItem(event){
              type="file"
              style={{ alignSelf: "end" }}
            />
-           {/* <View
+           <View
              name="image2"
              as="input"
              type="file"
@@ -490,7 +490,7 @@ async function updateItem(event){
              as="input"
              type="file"
              style={{ alignSelf: "end" }}
-           /> */}
+           />
            <Button type="submit" variation="primary">
              Create Item
            </Button>
@@ -498,6 +498,8 @@ async function updateItem(event){
        </View>
       }
   {(userAction == "search" || userAction == "myitems") &&
+
+
     /*   <div>
       <View margin="3rem 0">
       {items.map((item) => (
@@ -526,7 +528,7 @@ async function updateItem(event){
       </View>
       <Button onClick={signOut}>Sign Out</Button>
       </div> */
-     
+      
       <Collection
   items={items}
   type="list"
@@ -686,7 +688,7 @@ async function updateItem(event){
         type="file"
         style={{ alignSelf: "end" }}
       />
-  {/* <Image
+  <Image
         src={items[itemIndex].image2}
         alt=""
       />
@@ -725,7 +727,7 @@ async function updateItem(event){
         as="input"
         type="file"
         style={{ alignSelf: "end" }}
-      /> */}
+      />
       <Button type="submit" variation="primary">
         Update Item
       </Button>
