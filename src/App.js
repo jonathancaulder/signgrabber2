@@ -540,7 +540,7 @@ async function updateItem(event){
     <Card
       key={index}
       borderRadius="medium"
-      maxWidth="20rem"
+      maxWidth="100%"
       variation="outlined"
     >
       <Image
