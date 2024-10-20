@@ -407,9 +407,9 @@ async function updateItem(event){
       ((navigator.platform.indexOf("iPhone") != -1) || 
        (navigator.platform.indexOf("iPad") != -1) || 
        (navigator.platform.indexOf("iPod") != -1))
-      window.open("maps://maps.google.com/maps?daddr=curLatitude,curLongitude&amp;ll=");
+      window.open("maps://maps.google.com/maps?daddr=" & curLatitude & "," & curLongitude & "&amp;ll=");
   else /* else use Google */
-      window.open("https://maps.google.com/maps?daddr=curLatitude,curLongitude&amp;ll=");
+      window.open("https://maps.google.com/maps?daddr=" & curLatitude & "," & curLongitude & "&amp;ll=");
   }
   return (
     
