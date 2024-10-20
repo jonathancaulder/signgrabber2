@@ -46,8 +46,7 @@ const client = generateClient();
 var curLongitude;
 var curLatitude;
 const styles = {
-  height: '100%',
-  width: '100%',
+  width:"100%",
   objectFit: 'contain',
 };
 
@@ -56,12 +55,17 @@ const App = ({ signOut }) => {
   const [userAction, setUserAction] = useState("search");
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
+  const [file, setFile] = useState();
 
   // useEffect(() => {
   //   getLocation();
   //   //fetchItems();
   // }, []);
   
+    function handleChange(e) {
+        console.log(e.target.files);
+        setFile(URL.createObjectURL(e.target.files[0]));
+    }
  
 function getLocation() {
   if (navigator.geolocation) {
@@ -220,15 +224,18 @@ async function updateItem(event){
   async function createItem(event) {
     setUserAction("create");
     event.preventDefault();
+    //return;
     const form = new FormData(event.target);
     const image = form.get("image");
     const image2 = form.get("image2");
     const image3 = form.get("image3");
     const image4 = form.get("image4");
     const image5 = form.get("image5");
+    //const image = document.getElementById("image");
+
     const { username, userId, signInDetails } = await getCurrentUser();
     //alert(userId);
-    
+    alert(image.name);
     const data = {
       title: form.get("title"),
       description: form.get("description"),
@@ -247,6 +254,7 @@ async function updateItem(event){
       category: form.get("category"),
       userid: userId,
     };
+    
     if (!!data.image) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -504,12 +512,19 @@ async function updateItem(event){
              variation="quiet"
              required
            />
+           <View>
+         
+       </View>
            <View
              name="image"
              as="input"
              type="file"
-             style={{ alignSelf: "end" }}
+             style={styles}
+             onChange={handleChange}
            />
+           <Flex direction="column" justifyContent="center">
+            <img src={file} style={styles}/>
+         </Flex>
            <View
              name="image2"
              as="input"
@@ -540,6 +555,7 @@ async function updateItem(event){
          </Flex>
        </View>
       }
+      
   {(userAction == "search" || userAction == "myitems") &&
 
 
