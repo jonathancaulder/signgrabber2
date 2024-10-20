@@ -9,8 +9,8 @@ type Item @model @auth(rules: [{allow: public}])
   url: String
   price: String
   status: String
-  latitude: Int! @index(name: "byLatitudeAndLongitude", sortKeyFields: ["longitude"], queryField: "itemByLatitudeAndLongitude")
-  longitude: Int!
+  latitude: Int @index(name: "byLatitudeAndLongitude", sortKeyFields: ["longitude"], queryField: "itemByLatitudeAndLongitude")
+  longitude: Int
   image: String
   bucketkey: String
   image2: String
@@ -23,4 +23,7 @@ type Item @model @auth(rules: [{allow: public}])
   bucketkey5: String
   category: String!
   userid: String! @index
+  address1: String
+  city: String
+  state: String
 }

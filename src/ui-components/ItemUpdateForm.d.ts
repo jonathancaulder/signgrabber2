@@ -44,6 +44,9 @@ export declare type ItemUpdateFormInputValues = {
     bucketkey5?: string;
     category?: string;
     userid?: string;
+    address1?: string;
+    city?: string;
+    state?: string;
 };
 export declare type ItemUpdateFormValidationValues = {
     title?: ValidationFunction<string>;
@@ -68,6 +71,9 @@ export declare type ItemUpdateFormValidationValues = {
     bucketkey5?: ValidationFunction<string>;
     category?: ValidationFunction<string>;
     userid?: ValidationFunction<string>;
+    address1?: ValidationFunction<string>;
+    city?: ValidationFunction<string>;
+    state?: ValidationFunction<string>;
 };
 export declare type PrimitiveOverrideProps<T> = Partial<T> & React.DOMAttributes<HTMLDivElement>;
 export declare type ItemUpdateFormOverridesProps = {
@@ -94,6 +100,9 @@ export declare type ItemUpdateFormOverridesProps = {
     bucketkey5?: PrimitiveOverrideProps<TextFieldProps>;
     category?: PrimitiveOverrideProps<TextFieldProps>;
     userid?: PrimitiveOverrideProps<TextFieldProps>;
+    address1?: PrimitiveOverrideProps<TextFieldProps>;
+    city?: PrimitiveOverrideProps<TextFieldProps>;
+    state?: PrimitiveOverrideProps<TextFieldProps>;
 } & EscapeHatchProps;
 export declare type ItemUpdateFormProps = React.PropsWithChildren<{
     overrides?: ItemUpdateFormOverridesProps | undefined | null;

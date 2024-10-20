@@ -27,6 +27,9 @@ export const getItem = /* GraphQL */ `
       bucketkey5
       category
       userid
+      address1
+      city
+      state
       createdAt
       updatedAt
       __typename
@@ -64,6 +67,9 @@ export const listItems = /* GraphQL */ `
         bucketkey5
         category
         userid
+        address1
+        city
+        state
         createdAt
         updatedAt
         __typename
@@ -114,6 +120,9 @@ export const itemByLatitudeAndLongitude = /* GraphQL */ `
         bucketkey5
         category
         userid
+        address1
+        city
+        state
         createdAt
         updatedAt
         __typename
@@ -162,6 +171,9 @@ export const itemsByUserid = /* GraphQL */ `
         bucketkey5
         category
         userid
+        address1
+        city
+        state
         createdAt
         updatedAt
         __typename

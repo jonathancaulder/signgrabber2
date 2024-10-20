@@ -17,6 +17,9 @@
       },
       "api": {
         "signGrabber2": {}
+      },
+      "storage": {
+        "s3signgrabber2storage1a4cab3f": {}
       }
     }
   }

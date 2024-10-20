@@ -56,6 +56,8 @@ const App = ({ signOut }) => {
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
   const [file, setFile] = useState();
+const [longi, setLongi] = useState();
+const [lati, setLati] = useState();
 
   // useEffect(() => {
   //   getLocation();
@@ -80,6 +82,10 @@ function getLocation() {
   curLongitude = Math.round(position.coords.longitude * 100);
   //console.log("Latitude: " + position.coords.latitude +
   //"Longitude: " + position.coords.longitude)
+  setLati(curLatitude);
+  setLongi(curLongitude);
+  alert(curLatitude);
+  alert(curLongitude);
   fetchItems();
 }
 
@@ -200,8 +206,8 @@ async function updateItem(event){
     title: form.get("title"),
     description: form.get("description"),
     price: form.get("price"),
-    latitude: curLatitude,
-    longitude: curLongitude,
+    latitude: lati,
+    longitude: longi,
     // image: image.name,
     // image2: image2.name,
     // image3: image3.name,
@@ -212,6 +218,9 @@ async function updateItem(event){
     text: form.get("text"),
     url: form.get("url"),
     category: form.get("category"),
+    address1: form.get("address1"),
+      city: form.get("city"),
+      state: form.get("state"),
     //userid: userId,
   };
   await client.graphql({
@@ -235,13 +244,15 @@ async function updateItem(event){
 
     const { username, userId, signInDetails } = await getCurrentUser();
     //alert(userId);
-    alert(image.name);
+    alert(lati);
+    alert(longi);
+
     const data = {
       title: form.get("title"),
       description: form.get("description"),
       price: form.get("price"),
-      latitude: curLatitude,
-      longitude: curLongitude,
+      latitude: lati,
+      longitude: longi,
       image: image.name,
       image2: image2.name,
       image3: image3.name,
@@ -253,6 +264,9 @@ async function updateItem(event){
       url: form.get("url"),
       category: form.get("category"),
       userid: userId,
+      address1: form.get("address1"),
+      city: form.get("city"),
+      state: form.get("state"),
     };
     
     if (!!data.image) 
@@ -366,6 +380,7 @@ async function updateItem(event){
   }
   function showCreateItem() {
     //if not logged in, take to account page otherwise open for creation
+    getLocation();
     setUserAction("create");
     
   }
@@ -402,22 +417,21 @@ async function updateItem(event){
     if(userid == items[index].userid) return true; else return false;
    
   }
-  function mapsSelector() {
+  function mapsSelector(addr1, city, state) {
+   
     if /* if we're on iOS, open in Apple Maps */
     
       ((navigator.platform.indexOf("iPhone") != -1) || 
        (navigator.platform.indexOf("iPad") != -1) || 
        (navigator.platform.indexOf("iPod") != -1))
        {
-       alert(curLatitude);
-       alert(curLongitude);
-      window.open("maps://maps.google.com/maps?daddr=" & curLatitude & "," & curLongitude & "&amp;ll=");
+ 
+      window.open("maps://maps.google.com/maps?daddr=" + addr1 + "," + city + " " + state + "&amp};ll=");
   }
   else /* else use Google */
   {
-  alert(curLatitude);
-  alert(curLongitude);
-      window.open("https://maps.google.com/maps?daddr=" & curLatitude & "," & curLongitude & "&amp;ll=");
+ 
+      window.open("https://maps.google.com/maps?daddr=" + addr1 + "," + city + " " + state + "&amp};ll=");
   }
   }
   return (
@@ -463,6 +477,14 @@ async function updateItem(event){
              required
            />
            <TextField
+        name="text"
+        placeholder="Text"
+        label="Text"
+        labelHidden
+        variation="quiet"
+        required
+      />
+           <TextField
              name="email"
              placeholder="Email"
              label="Email"
@@ -479,9 +501,25 @@ async function updateItem(event){
              required
            />
            <TextField
-             name="text"
-             placeholder="Text"
-             label="Text"
+             name="address1"
+             placeholder="Address1"
+             label="Address1"
+             labelHidden
+             variation="quiet"
+             required
+           />
+           <TextField
+             name="city"
+             placeholder="City"
+             label="City"
+             labelHidden
+             variation="quiet"
+             required
+           />
+           <TextField
+             name="state"
+             placeholder="State"
+             label="State"
              labelHidden
              variation="quiet"
              required
@@ -510,7 +548,7 @@ async function updateItem(event){
              label="Latitude"
              labelHidden
              variation="quiet"
-             required
+
            />
            <TextField
              name="longitude"
@@ -519,7 +557,7 @@ async function updateItem(event){
              label="Longitude"
              labelHidden
              variation="quiet"
-             required
+
            />
            <View>
          
@@ -661,7 +699,7 @@ async function updateItem(event){
         <Heading padding="small">{item.description}</Heading>
         <Heading padding="small"><a href={`tel:${item.phone}`}>Call</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href={`sms:${item.text}`}>Text</a></Heading>
         <Heading padding="small"><a href={`mailto:${item.email}`}>Email</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href={`${item.url}`}>More Info</a></Heading>
-        <Heading padding="small"><img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector()}/></Heading>
+        <Heading padding="small"><img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/></Heading>
         {ismyitem(index) && 
         <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
           Edit
@@ -703,6 +741,15 @@ async function updateItem(event){
         defaultValue={items[itemIndex].price}
         required
       />
+  <TextField
+        name="text"
+        placeholder="Text"
+        label="Text"
+        labelHidden
+        variation="quiet"
+        defaultValue={items[itemIndex].text}
+        required
+      />
       <TextField
         name="email"
         placeholder="Email"
@@ -721,6 +768,30 @@ async function updateItem(event){
         defaultValue={items[itemIndex].phone}
         required
       />
+        <TextField
+             name="address1"
+             placeholder="Address1"
+             label="Address1"
+             labelHidden
+             variation="quiet"
+             required
+           />
+           <TextField
+             name="city"
+             placeholder="City"
+             label="City"
+             labelHidden
+             variation="quiet"
+             required
+           />
+           <TextField
+             name="state"
+             placeholder="State"
+             label="State"
+             labelHidden
+             variation="quiet"
+             required
+           />
       <TextField
         name="text"
         placeholder="Text"
@@ -757,7 +828,7 @@ async function updateItem(event){
         labelHidden
         variation="quiet"
         defaultValue={items[itemIndex].latitude}
-        required
+
       />
       <TextField
         name="longitude"
@@ -767,7 +838,7 @@ async function updateItem(event){
         labelHidden
         variation="quiet"
         defaultValue={items[itemIndex].longitude}
-        required
+
       />
   <Image
         src={items[itemIndex].image}

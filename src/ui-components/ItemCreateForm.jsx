@@ -45,6 +45,9 @@ export default function ItemCreateForm(props) {
     bucketkey5: "",
     category: "",
     userid: "",
+    address1: "",
+    city: "",
+    state: "",
   };
   const [title, setTitle] = React.useState(initialValues.title);
   const [description, setDescription] = React.useState(
@@ -70,6 +73,9 @@ export default function ItemCreateForm(props) {
   const [bucketkey5, setBucketkey5] = React.useState(initialValues.bucketkey5);
   const [category, setCategory] = React.useState(initialValues.category);
   const [userid, setUserid] = React.useState(initialValues.userid);
+  const [address1, setAddress1] = React.useState(initialValues.address1);
+  const [city, setCity] = React.useState(initialValues.city);
+  const [state, setState] = React.useState(initialValues.state);
   const [errors, setErrors] = React.useState({});
   const resetStateValues = () => {
     setTitle(initialValues.title);
@@ -94,6 +100,9 @@ export default function ItemCreateForm(props) {
     setBucketkey5(initialValues.bucketkey5);
     setCategory(initialValues.category);
     setUserid(initialValues.userid);
+    setAddress1(initialValues.address1);
+    setCity(initialValues.city);
+    setState(initialValues.state);
     setErrors({});
   };
   const validations = {
@@ -105,8 +114,8 @@ export default function ItemCreateForm(props) {
     url: [],
     price: [],
     status: [],
-    latitude: [{ type: "Required" }],
-    longitude: [{ type: "Required" }],
+    latitude: [],
+    longitude: [],
     image: [],
     bucketkey: [],
     image2: [],
@@ -119,6 +128,9 @@ export default function ItemCreateForm(props) {
     bucketkey5: [],
     category: [{ type: "Required" }],
     userid: [{ type: "Required" }],
+    address1: [],
+    city: [],
+    state: [],
   };
   const runValidationTasks = async (
     fieldName,
@@ -168,6 +180,9 @@ export default function ItemCreateForm(props) {
           bucketkey5,
           category,
           userid,
+          address1,
+          city,
+          state,
         };
         const validationResponses = await Promise.all(
           Object.keys(validations).reduce((promises, fieldName) => {
@@ -252,6 +267,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.title ?? value;
@@ -297,6 +315,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.description ?? value;
@@ -342,6 +363,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.email ?? value;
@@ -387,6 +411,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.phone ?? value;
@@ -432,6 +459,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.text ?? value;
@@ -477,6 +507,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.url ?? value;
@@ -522,6 +555,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.price ?? value;
@@ -567,6 +603,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.status ?? value;
@@ -583,7 +622,7 @@ export default function ItemCreateForm(props) {
       ></TextField>
       <TextField
         label="Latitude"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="number"
         step="any"
@@ -616,6 +655,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.latitude ?? value;
@@ -632,7 +674,7 @@ export default function ItemCreateForm(props) {
       ></TextField>
       <TextField
         label="Longitude"
-        isRequired={true}
+        isRequired={false}
         isReadOnly={false}
         type="number"
         step="any"
@@ -665,6 +707,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.longitude ?? value;
@@ -710,6 +755,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.image ?? value;
@@ -755,6 +803,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.bucketkey ?? value;
@@ -800,6 +851,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.image2 ?? value;
@@ -845,6 +899,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.bucketkey2 ?? value;
@@ -890,6 +947,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.image3 ?? value;
@@ -935,6 +995,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.bucketkey3 ?? value;
@@ -980,6 +1043,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.image4 ?? value;
@@ -1025,6 +1091,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.bucketkey4 ?? value;
@@ -1070,6 +1139,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.image5 ?? value;
@@ -1115,6 +1187,9 @@ export default function ItemCreateForm(props) {
               bucketkey5: value,
               category,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.bucketkey5 ?? value;
@@ -1160,6 +1235,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category: value,
               userid,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.category ?? value;
@@ -1205,6 +1283,9 @@ export default function ItemCreateForm(props) {
               bucketkey5,
               category,
               userid: value,
+              address1,
+              city,
+              state,
             };
             const result = onChange(modelFields);
             value = result?.userid ?? value;
@@ -1218,6 +1299,150 @@ export default function ItemCreateForm(props) {
         errorMessage={errors.userid?.errorMessage}
         hasError={errors.userid?.hasError}
         {...getOverrideProps(overrides, "userid")}
+      ></TextField>
+      <TextField
+        label="Address1"
+        isRequired={false}
+        isReadOnly={false}
+        value={address1}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              email,
+              phone,
+              text,
+              url,
+              price,
+              status,
+              latitude,
+              longitude,
+              image,
+              bucketkey,
+              image2,
+              bucketkey2,
+              image3,
+              bucketkey3,
+              image4,
+              bucketkey4,
+              image5,
+              bucketkey5,
+              category,
+              userid,
+              address1: value,
+              city,
+              state,
+            };
+            const result = onChange(modelFields);
+            value = result?.address1 ?? value;
+          }
+          if (errors.address1?.hasError) {
+            runValidationTasks("address1", value);
+          }
+          setAddress1(value);
+        }}
+        onBlur={() => runValidationTasks("address1", address1)}
+        errorMessage={errors.address1?.errorMessage}
+        hasError={errors.address1?.hasError}
+        {...getOverrideProps(overrides, "address1")}
+      ></TextField>
+      <TextField
+        label="City"
+        isRequired={false}
+        isReadOnly={false}
+        value={city}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              email,
+              phone,
+              text,
+              url,
+              price,
+              status,
+              latitude,
+              longitude,
+              image,
+              bucketkey,
+              image2,
+              bucketkey2,
+              image3,
+              bucketkey3,
+              image4,
+              bucketkey4,
+              image5,
+              bucketkey5,
+              category,
+              userid,
+              address1,
+              city: value,
+              state,
+            };
+            const result = onChange(modelFields);
+            value = result?.city ?? value;
+          }
+          if (errors.city?.hasError) {
+            runValidationTasks("city", value);
+          }
+          setCity(value);
+        }}
+        onBlur={() => runValidationTasks("city", city)}
+        errorMessage={errors.city?.errorMessage}
+        hasError={errors.city?.hasError}
+        {...getOverrideProps(overrides, "city")}
+      ></TextField>
+      <TextField
+        label="State"
+        isRequired={false}
+        isReadOnly={false}
+        value={state}
+        onChange={(e) => {
+          let { value } = e.target;
+          if (onChange) {
+            const modelFields = {
+              title,
+              description,
+              email,
+              phone,
+              text,
+              url,
+              price,
+              status,
+              latitude,
+              longitude,
+              image,
+              bucketkey,
+              image2,
+              bucketkey2,
+              image3,
+              bucketkey3,
+              image4,
+              bucketkey4,
+              image5,
+              bucketkey5,
+              category,
+              userid,
+              address1,
+              city,
+              state: value,
+            };
+            const result = onChange(modelFields);
+            value = result?.state ?? value;
+          }
+          if (errors.state?.hasError) {
+            runValidationTasks("state", value);
+          }
+          setState(value);
+        }}
+        onBlur={() => runValidationTasks("state", state)}
+        errorMessage={errors.state?.errorMessage}
+        hasError={errors.state?.hasError}
+        {...getOverrideProps(overrides, "state")}
       ></TextField>
       <Flex
         justifyContent="space-between"

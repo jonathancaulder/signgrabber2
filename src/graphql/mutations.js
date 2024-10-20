@@ -30,6 +30,9 @@ export const createItem = /* GraphQL */ `
       bucketkey5
       category
       userid
+      address1
+      city
+      state
       createdAt
       updatedAt
       __typename
@@ -65,6 +68,9 @@ export const updateItem = /* GraphQL */ `
       bucketkey5
       category
       userid
+      address1
+      city
+      state
       createdAt
       updatedAt
       __typename
@@ -100,6 +106,9 @@ export const deleteItem = /* GraphQL */ `
       bucketkey5
       category
       userid
+      address1
+      city
+      state
       createdAt
       updatedAt
       __typename
