@@ -56,8 +56,10 @@ const App = ({ signOut }) => {
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
   const [file, setFile] = useState();
-const [longi, setLongi] = useState();
-const [lati, setLati] = useState();
+  const [file2, setFile2] = useState();
+  const [file3, setFile3] = useState();
+  const [file4, setFile4] = useState();
+  const [file5, setFile5] = useState();
 
   // useEffect(() => {
   //   getLocation();
@@ -65,10 +67,26 @@ const [lati, setLati] = useState();
   // }, []);
   
     function handleChange(e) {
-        console.log(e.target.files);
+        
         setFile(URL.createObjectURL(e.target.files[0]));
     }
+    function handleChange2(e) {
+      
+      setFile2(URL.createObjectURL(e.target.files[0]));
+  }
+  function handleChange3(e) {
+    
+    setFile3(URL.createObjectURL(e.target.files[0]));
+}
+function handleChange4(e) {
  
+  setFile4(URL.createObjectURL(e.target.files[0]));
+}
+function handleChange5(e) {
+ 
+  setFile5(URL.createObjectURL(e.target.files[0]));
+}
+
 function getLocation() {
   if (navigator.geolocation) {
     navigator.geolocation.getCurrentPosition(showPosition);
@@ -82,10 +100,6 @@ function getLocation() {
   curLongitude = Math.round(position.coords.longitude * 100);
   //console.log("Latitude: " + position.coords.latitude +
   //"Longitude: " + position.coords.longitude)
-  setLati(curLatitude);
-  setLongi(curLongitude);
-  alert(curLatitude);
-  alert(curLongitude);
   fetchItems();
 }
 
@@ -206,8 +220,8 @@ async function updateItem(event){
     title: form.get("title"),
     description: form.get("description"),
     price: form.get("price"),
-    latitude: lati,
-    longitude: longi,
+    latitude: curLatitude,
+    longitude: curLongitude,
     // image: image.name,
     // image2: image2.name,
     // image3: image3.name,
@@ -244,15 +258,14 @@ async function updateItem(event){
 
     const { username, userId, signInDetails } = await getCurrentUser();
     //alert(userId);
-    alert(lati);
-    alert(longi);
+ 
 
     const data = {
       title: form.get("title"),
       description: form.get("description"),
       price: form.get("price"),
-      latitude: lati,
-      longitude: longi,
+      latitude: curLatitude,
+      longitude: curLongitude,
       image: image.name,
       image2: image2.name,
       image3: image3.name,
@@ -571,31 +584,47 @@ async function updateItem(event){
            />
            <Flex direction="column" justifyContent="center">
             <img src={file} style={styles}/>
-         </Flex>
+            </Flex>
            <View
              name="image2"
              as="input"
              type="file"
-             style={{ alignSelf: "end" }}
+             style={styles}
+             onChange={handleChange2}
            />
+           <Flex direction="column" justifyContent="center">
+            <img src={file2} style={styles}/>
+            </Flex>
            <View
              name="image3"
              as="input"
              type="file"
-             style={{ alignSelf: "end" }}
+             style={styles}
+             onChange={handleChange3}
            />
+           <Flex direction="column" justifyContent="center">
+            <img src={file3} style={styles}/>
+            </Flex>
            <View
              name="image4"
              as="input"
              type="file"
-             style={{ alignSelf: "end" }}
+             style={styles}
+             onChange={handleChange4}
            />
+           <Flex direction="column" justifyContent="center">
+            <img src={file4} style={styles}/>
+            </Flex>
            <View
              name="image5"
              as="input"
              type="file"
-             style={{ alignSelf: "end" }}
+             style={styles}
+             onChange={handleChange5}
            />
+           <Flex direction="column" justifyContent="center">
+            <img src={file5} style={styles}/>
+            </Flex>
            <Button type="submit" variation="primary">
              Create Item
            </Button>
