@@ -659,7 +659,7 @@ async function updateItem(event){
         <Divider padding="xs" />
         <Heading padding="medium">{item.title}</Heading>
         <Heading padding="small">{item.description}</Heading>
-        <Heading padding="small"><a href="tel:9196963976">Call</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="sms:{item.text}">Text</a></Heading>
+        <Heading padding="small"><a href={`/tel:/$item.phone}`}>Call</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="sms:{item.text}">Text</a></Heading>
         <Heading padding="small"><a href="mailto:{item.email}">Email</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href="{item.url}">More Info</a></Heading>
         <Heading padding="small"><img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector()}/></Heading>
         {ismyitem(index) && 
