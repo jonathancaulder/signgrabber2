@@ -47,7 +47,7 @@ const client = generateClient();
 var curLongitude;
 var curLatitude;
 const styles = {
-  width:"100%",
+  width:"300",
   objectFit: 'contain',
 };
 
@@ -75,7 +75,7 @@ const App = ({ signOut }) => {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         rsfile,
-        300,
+        360,
         300,
         "JPEG",
         100,
@@ -90,7 +90,7 @@ const App = ({ signOut }) => {
       new Promise((resolve) => {
         Resizer.imageFileResizer(
           rsfile,
-          300,
+          360,
           300,
           "JPEG",
           100,
