@@ -14,6 +14,7 @@ import { getCurrentUser } from 'aws-amplify/auth';
 import mapicon from './mapIcon.png'
 import { UpdateMyItem } from './ui-components';
 import { autoSignIn, signOut } from "aws-amplify/auth";
+import Resizer from "react-image-file-resizer";
 
 import {
   Button,
@@ -60,32 +61,250 @@ const App = ({ signOut }) => {
   const [file3, setFile3] = useState();
   const [file4, setFile4] = useState();
   const [file5, setFile5] = useState();
+  const [previewFile, setPreviewFile] = useState();
+  const [previewFile2, setPreviewFile2] = useState();
+  const [previewFile3, setPreviewFile3] = useState();
+  const [previewFile4, setPreviewFile4] = useState();
+  const [previewFile5, setPreviewFile5] = useState();
 
   // useEffect(() => {
   //   getLocation();
   //   //fetchItems();
   // }, []);
-  
-    function handleChange(e) {
-        
-        setFile(URL.createObjectURL(e.target.files[0]));
+  const resizeFile = (rsfile) =>
+    new Promise((resolve) => {
+      Resizer.imageFileResizer(
+        rsfile,
+        300,
+        300,
+        "JPEG",
+        100,
+        0,
+        (uri) => {
+          resolve(uri);
+        },
+        "file"
+      );
+    });
+    const resizeFileForPreview = (rsfile) =>
+      new Promise((resolve) => {
+        Resizer.imageFileResizer(
+          rsfile,
+          300,
+          300,
+          "JPEG",
+          100,
+          0,
+          (uri) => {
+            resolve(uri);
+          },
+          "base64"
+        );
+      });
+  const handleChange = async (e) => {
+    try{
+      const file1 = e.target.files[0];
+      const image1 = await resizeFile(file1);
+      setFile(image1);
+      const previewImage1 = await resizeFileForPreview(file1);
+      setPreviewFile(previewImage1);
+      console.log(image1);
     }
-    function handleChange2(e) {
-      
-      setFile2(URL.createObjectURL(e.target.files[0]));
+    catch(err) {
+      console.log(err);
+    }
   }
-  function handleChange3(e) {
-    
-    setFile3(URL.createObjectURL(e.target.files[0]));
-}
-function handleChange4(e) {
- 
-  setFile4(URL.createObjectURL(e.target.files[0]));
-}
-function handleChange5(e) {
- 
-  setFile5(URL.createObjectURL(e.target.files[0]));
-}
+  const handleChange2 = async (e) => {
+    try{
+      const file2 = e.target.files[0];
+      const image2 = await resizeFile(file2);
+      setFile2(image2);
+      const previewImage2 = await resizeFileForPreview(file2);
+      setPreviewFile2(previewImage2);
+      console.log(image2);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+  const handleChange3 = async (e) => {
+    try{
+      const file3 = e.target.files[0];
+      const image3 = await resizeFile(file3);
+      setFile3(image3);
+      const previewImage3 = await resizeFileForPreview(file3);
+      setPreviewFile3(previewImage3);
+      console.log(image3);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+  const handleChange4 = async (e) => {
+    try{
+      const file4 = e.target.files[0];
+      const image4 = await resizeFile(file4);
+      setFile4(image4);
+      const previewImage4 = await resizeFileForPreview(file4);
+      setPreviewFile4(previewImage4);
+      console.log(image4);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+  const handleChange5 = async (e) => {
+    try{
+      const file5 = e.target.files[0];
+      const image5 = await resizeFile(file5);
+      setFile5(image5);
+      const previewImage5 = await resizeFileForPreview(file5);
+      setPreviewFile5(previewImage5);
+      console.log(image5);
+    }
+    catch(err) {
+      console.log(err);
+    }
+  }
+    // function handleChange(e) {
+    //     var fileInput = false;
+    //     if(e.target.files[0])
+    //       {
+    //         fileInput = true;
+    //       }
+    //     if(fileInput){
+    //       try {
+    //         Resizer.imageFileResizer(
+    //           e.target.files[0],
+    //           300,
+    //           300,
+    //           "JPEG",
+    //           100,
+    //           0,
+    //           (uri) => {
+    //             console.log(uri);
+                
+    //             setFile(uri);
+    //           },
+    //           "base64",
+    //           200,
+    //           200
+    //         );
+    //       } catch (err) {
+    //         console.log(err);
+    //       }
+    //     }
+        
+
+    //}
+//     function handleChange2(e) {
+      
+//       var fileInput = false;
+//         if(e.target.files[0]){fileInput = true;}
+//         if(fileInput){
+//           try {
+//             Resizer.imageFileResizer(
+//               e.target.files[0],
+//               300,
+//               300,
+//               "JPEG",
+//               100,
+//               0,
+//               (uri) => {
+//                 console.log(uri);
+                
+//                 setFile2(uri);
+//               },
+//               "base64",
+//               200,
+//               200
+//             );
+//           } catch (err) {
+//             console.log(err);
+//           }
+//         }
+//   }
+//   function handleChange3(e) {
+//     var fileInput = false;
+//     if(e.target.files[0]){fileInput = true;}
+//     if(fileInput){
+//       try {
+//         Resizer.imageFileResizer(
+//           e.target.files[0],
+//           300,
+//           300,
+//           "JPEG",
+//           100,
+//           0,
+//           (uri) => {
+//             console.log(uri);
+            
+//             setFile3(uri);
+//           },
+//           "base64",
+//           200,
+//           200
+//         );
+//       } catch (err) {
+//         console.log(err);
+//       }
+//     }
+//     //setFile3(URL.createObjectURL(e.target.files[0]));
+// }
+// function handleChange4(e) {
+//   var fileInput = false;
+//         if(e.target.files[0]){fileInput = true;}
+//         if(fileInput){
+//           try {
+//             Resizer.imageFileResizer(
+//               e.target.files[0],
+//               300,
+//               300,
+//               "JPEG",
+//               100,
+//               0,
+//               (uri) => {
+//                 console.log(uri);
+                
+//                 setFile4(uri);
+//               },
+//               "base64",
+//               200,
+//               200
+//             );
+//           } catch (err) {
+//             console.log(err);
+//           }
+//         }
+//   //setFile4(URL.createObjectURL(e.target.files[0]));
+// }
+// function handleChange5(e) {
+//   var fileInput = false;
+//         if(e.target.files[0]){fileInput = true;}
+//         if(fileInput){
+//           try {
+//             Resizer.imageFileResizer(
+//               e.target.files[0],
+//               300,
+//               300,
+//               "JPEG",
+//               100,
+//               0,
+//               (uri) => {
+//                 console.log(uri);
+                
+//                 setFile(uri);
+//               },
+//               "base64",
+//               200,
+//               200
+//             );
+//           } catch (err) {
+//             console.log(err);
+//           }
+//         }
+//   //setFile5(URL.createObjectURL(e.target.files[0]));
+// }
 
 function getLocation() {
   if (navigator.geolocation) {
@@ -293,7 +512,7 @@ async function updateItem(event){
 
       const result = await uploadData({
         key: fileName,
-        data: image,
+        data: file,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           //onProgress // Optional progress callback.
@@ -311,7 +530,7 @@ async function updateItem(event){
 
       const result = await uploadData({
         key: fileName2,
-        data: image2,
+        data: file2,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           //onProgress // Optional progress callback.
@@ -329,7 +548,7 @@ async function updateItem(event){
 
       const result = await uploadData({
         key: fileName3,
-        data: image3,
+        data: file3,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           //onProgress // Optional progress callback.
@@ -347,7 +566,7 @@ async function updateItem(event){
 
       const result = await uploadData({
         key: fileName4,
-        data: image4,
+        data: file4,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           //onProgress // Optional progress callback.
@@ -365,7 +584,7 @@ async function updateItem(event){
 
       const result = await uploadData({
         key: fileName5,
-        data: image5,
+        data: file5,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
           //onProgress // Optional progress callback.
@@ -583,7 +802,7 @@ async function updateItem(event){
              onChange={handleChange}
            />
            <Flex direction="column" justifyContent="center">
-            <img src={file} style={styles}/>
+            <img src={previewFile} style={styles}/>
             </Flex>
            <View
              name="image2"
@@ -593,7 +812,7 @@ async function updateItem(event){
              onChange={handleChange2}
            />
            <Flex direction="column" justifyContent="center">
-            <img src={file2} style={styles}/>
+            <img src={previewFile2} style={styles}/>
             </Flex>
            <View
              name="image3"
@@ -603,7 +822,7 @@ async function updateItem(event){
              onChange={handleChange3}
            />
            <Flex direction="column" justifyContent="center">
-            <img src={file3} style={styles}/>
+            <img src={previewFile3} style={styles}/>
             </Flex>
            <View
              name="image4"
@@ -613,7 +832,7 @@ async function updateItem(event){
              onChange={handleChange4}
            />
            <Flex direction="column" justifyContent="center">
-            <img src={file4} style={styles}/>
+            <img src={previewFile4} style={styles}/>
             </Flex>
            <View
              name="image5"
@@ -623,7 +842,7 @@ async function updateItem(event){
              onChange={handleChange5}
            />
            <Flex direction="column" justifyContent="center">
-            <img src={file5} style={styles}/>
+            <img src={previewFile5} style={styles}/>
             </Flex>
            <Button type="submit" variation="primary">
              Create Item
