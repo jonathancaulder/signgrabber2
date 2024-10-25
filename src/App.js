@@ -11,7 +11,12 @@ import { remove } from 'aws-amplify/storage';
 import Storage from 'aws-amplify/storage';
 import { getUrl } from "aws-amplify/storage";
 import { getCurrentUser } from 'aws-amplify/auth';
-import mapicon from './mapIcon.png'
+import mapicon from './map.png'
+import phoneicon from './phone.png'
+import texticon from './text.png'
+import urlicon from './url.png'
+import emailicon from './email.png'
+
 import { UpdateMyItem } from './ui-components';
 import { autoSignIn, signOut } from "aws-amplify/auth";
 import Resizer from "react-image-file-resizer";
@@ -75,7 +80,7 @@ const App = ({ signOut }) => {
     new Promise((resolve) => {
       Resizer.imageFileResizer(
         rsfile,
-        360,
+        300,
         300,
         "JPEG",
         100,
@@ -90,7 +95,7 @@ const App = ({ signOut }) => {
       new Promise((resolve) => {
         Resizer.imageFileResizer(
           rsfile,
-          360,
+          300,
           300,
           "JPEG",
           100,
@@ -945,9 +950,9 @@ async function updateItem(event){
         <Divider padding="xs" />
         <Heading padding="medium">{item.title}</Heading>
         <Heading padding="small">{item.description}</Heading>
-        <Heading padding="small"><a href={`tel:${item.phone}`}>Call</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href={`sms:${item.text}`}>Text</a></Heading>
-        <Heading padding="small"><a href={`mailto:${item.email}`}>Email</a>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<a href={`${item.url}`}>More Info</a></Heading>
-        <Heading padding="small"><img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/></Heading>
+        <Heading padding="small"><a href={`tel:${item.phone}`}><img src={phoneicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a><a href={`sms:${item.text}`}><img src={texticon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <a href={`mailto:${item.email}`}><img src={emailicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a><a href={`${item.url}`}><img src={urlicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a>
+        <img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/></Heading>
         {ismyitem(index) && 
         <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
           Edit
