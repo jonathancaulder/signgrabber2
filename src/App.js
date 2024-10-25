@@ -55,7 +55,11 @@ const styles = {
   width:"300",
   objectFit: 'contain',
 };
-
+const iconstyles = {
+  float: "none",
+  paddingLeft: "20px",
+  paddingRight: "20px",
+};
 const App = ({ signOut }) => {
   const [items, setItems] = useState([]);
   const [userAction, setUserAction] = useState("search");
@@ -950,9 +954,13 @@ async function updateItem(event){
         <Divider padding="xs" />
         <Heading padding="medium">{item.title}</Heading>
         <Heading padding="small">{item.description}</Heading>
-        <Heading padding="small"><a href={`tel:${item.phone}`}><img src={phoneicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a><a href={`sms:${item.text}`}><img src={texticon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        <a href={`mailto:${item.email}`}><img src={emailicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a><a href={`${item.url}`}><img src={urlicon} width = "50" height = "50"></img>&nbsp;&nbsp;&nbsp;&nbsp;</a>
-        <img src={mapicon} width = "50" height = "50" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/></Heading>
+        <Heading >
+        <a style={iconstyles} href={`tel:${item.phone}`}><img  src={phoneicon} width = "25" height = "25"></img></a>
+        <a style={iconstyles} href={`sms:${item.text}`}><img  src={texticon} width = "25" height = "25"></img></a>
+        <a style={iconstyles} href={`mailto:${item.email}`}><img  src={emailicon} width = "25" height = "25"></img></a>
+        <a style={iconstyles} href={`${item.url}`}><img  src={urlicon} width = "25" height = "25"></img></a>
+        <img  src={mapicon} width = "25" height = "25" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/>
+        </Heading>
         {ismyitem(index) && 
         <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
           Edit
