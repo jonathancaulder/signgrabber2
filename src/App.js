@@ -434,6 +434,42 @@ function getLocation() {
           });
             item.image = getUrlResult.url;
         }
+        if (item.image2) {
+          const getUrlResult = await getUrl({
+            key: item.image2,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image2 = getUrlResult.url;
+        }
+        if (item.image3) {
+          const getUrlResult = await getUrl({
+            key: item.image3,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image3 = getUrlResult.url;
+        }
+        if (item.image4) {
+          const getUrlResult = await getUrl({
+            key: item.image4,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image4 = getUrlResult.url;
+        }
+        if (item.image5) {
+          const getUrlResult = await getUrl({
+            key: item.image5,
+            options: {
+              accessLevel: 'guest'  // can be 'private', 'protected', or 'guest' but defaults to `guest`
+            },
+          });
+            item.image5 = getUrlResult.url;
+        }
         return item;
       })
     );
@@ -443,6 +479,11 @@ async function updateItem(event){
   setUserAction("myitems");
   event.preventDefault();
   const form = new FormData(event.target);
+    const image = form.get("image");
+    const image2 = form.get("image2");
+    const image3 = form.get("image3");
+    const image4 = form.get("image4");
+    const image5 = form.get("image5");
   const data = {
     id: items[itemIndex].id,
     title: form.get("title"),
@@ -450,11 +491,11 @@ async function updateItem(event){
     price: form.get("price"),
     latitude: curLatitude,
     longitude: curLongitude,
-    // image: image.name,
-    // image2: image2.name,
-    // image3: image3.name,
-    // image4: image4.name,
-    // image5: image5.name,
+    image: image.name,
+    image2: image2.name,
+    image3: image3.name,
+    image4: image4.name,
+    image5: image5.name,
     email: form.get("email"),
     phone: form.get("phone"),
     text: form.get("text"),
@@ -465,6 +506,98 @@ async function updateItem(event){
       state: form.get("state"),
     //userid: userId,
   };
+
+  if (!!data.image) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName;
+      fileName = uuidv4();
+      fileName += ".jpg";
+      data.image = fileName;
+      data.bucketkey = fileName;
+
+      const result = await uploadData({
+        key: fileName,
+        data: file,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image2) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName2;
+      fileName2 = uuidv4();
+      fileName2 += ".jpg";
+      data.image2 = fileName2;
+      data.bucketkey2 = fileName2;
+
+      const result = await uploadData({
+        key: fileName2,
+        data: file2,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image3) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName3;
+      fileName3 = uuidv4();
+      fileName3 += ".jpg";
+      data.image3 = fileName3;
+      data.bucketkey3 = fileName3;
+
+      const result = await uploadData({
+        key: fileName3,
+        data: file3,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image4) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName4;
+      fileName4 = uuidv4();
+      fileName4 += ".jpg";
+      data.image4 = fileName4;
+      data.bucketkey4 = fileName4;
+
+      const result = await uploadData({
+        key: fileName4,
+        data: file4,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+    if (!!data.image5) 
+    {
+      const { v4: uuidv4 } = require('uuid');
+      var fileName5;
+      fileName5 = uuidv4();
+      fileName5 += ".jpg";
+      data.image5 = fileName5;
+      data.bucketkey5 = fileName5;
+
+      const result = await uploadData({
+        key: fileName5,
+        data: file5,
+        options: {
+          accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
+          //onProgress // Optional progress callback.
+        }
+      }).result;
+    }
+
   await client.graphql({
     query: updateItemMutation,
     variables: { input: data },
@@ -678,19 +811,19 @@ async function updateItem(event){
   return (
     
      <View className="App">
-            <Menu>
+      <Menu>
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
         <MenuItem onClick={() => showCreateItem()}>Create</MenuItem>
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
         <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>
       </Menu>
-       <Heading level={1}>signGrabber</Heading>
-{userAction == "menu" &&
-  <Heading padding="medium">Please select a menu option from above</Heading>
-}
+      <Heading level={1}>signGrabber</Heading>
+      {userAction == "menu" &&
+        <Heading padding="medium">Please select a menu option from above</Heading>
+      }
       {userAction == "create" && !userid && 
         <autoSignIn/> }
-       {userAction == "create" &&
+      {userAction == "create" &&
         <View as="form" margin="3rem 0" onSubmit={createItem}>
          <Flex direction="column" justifyContent="center">
            <TextField
@@ -718,13 +851,13 @@ async function updateItem(event){
              required
            />
            <TextField
-        name="text"
-        placeholder="Text"
-        label="Text"
-        labelHidden
-        variation="quiet"
-        required
-      />
+            name="text"
+            placeholder="Text"
+            label="Text"
+            labelHidden
+            variation="quiet"
+            required
+            />
            <TextField
              name="email"
              placeholder="Email"
@@ -775,13 +908,13 @@ async function updateItem(event){
            />
            <SelectField
             label="Category" name="category">
-    <option value="For Sale">For Sale</option>
-    <option value="For Rent">For Rent</option>
-    <option value="For Lease">For Lease</option>
-    <option value="Help Wanted">Help Wanted</option>
-    <option value="Garage Sale">Garage Sale</option>
-    <option value="Event">Event</option>
-</SelectField>
+            <option value="For Sale">For Sale</option>
+            <option value="For Rent">For Rent</option>
+            <option value="For Lease">For Lease</option>
+            <option value="Help Wanted">Help Wanted</option>
+            <option value="Garage Sale">Garage Sale</option>
+            <option value="Event">Event</option>
+            </SelectField>
            <TextField
              name="latitude"
              id="latitude"
@@ -802,7 +935,7 @@ async function updateItem(event){
            />
            <View>
          
-       </View>
+            </View>
            <View
              name="image"
              as="input"
@@ -856,11 +989,11 @@ async function updateItem(event){
            <Button type="submit" variation="primary">
              Create Item
            </Button>
-         </Flex>
-       </View>
+            </Flex>
+        </View>
       }
       
-  {(userAction == "search" || userAction == "myitems") &&
+      {(userAction == "search" || userAction == "myitems") &&
 
 
     /*   <div>
@@ -893,30 +1026,30 @@ async function updateItem(event){
       </div> */
       
       <Collection
-  items={items}
-  type="list"
-  direction="row"
-  gap="20px"
-  wrap="wrap"
->
-  {(item, index) => (
-    <Card
-      key={index}
-      borderRadius="medium"
-      maxWidth="100%"
-      variation="outlined"
-    >
+        items={items}
+        type="list"
+        direction="row"
+        gap="20px"
+        wrap="wrap"
+      >
+      {(item, index) => (
+      <Card
+        key={index}
+        borderRadius="medium"
+        maxWidth="100%"
+        variation="outlined"
+      >
       {/* <Image
         src={item.image}
         alt=""
       /> */}
       <Splide
-      options={ {
+        options={ {
         rewind: true,
         gap   : '1rem',
       } }
       aria-label="My Favorite Images"
-    >
+      >
       <SplideSlide>
         <img src={item.image} alt="Image 1" style={styles}/>
       </SplideSlide>
@@ -962,146 +1095,149 @@ async function updateItem(event){
         <img  src={mapicon} width = "25" height = "25" onClick={() => mapsSelector(item.addr1, item.city, item.state)}/>
         </Heading>
         {ismyitem(index) && 
-        <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
-          Edit
-        </Button>
-}
+          <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
+            Edit
+          </Button>
+        }
       </View>
     </Card>
   )}
-</Collection>
-}
-{userAction == "update" && 
+      </Collection>
+  }
+    {userAction == "update" && 
+    <View as="form" margin="3rem 0" onSubmit={updateItem}>
+      <Flex direction="column" justifyContent="center">
+<TextField
+name="title"
+placeholder="Title"
+label="Title"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].title}
+required
+/>
+<TextField
+name="description"
+placeholder="Description"
+label="Description"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].description}
+required
+/>
+<TextField
+name="price"
+placeholder="Price"
+label="Price"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].price}
+required
+/>
+<TextField
+name="text"
+placeholder="Text"
+label="Text"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].text}
+required
+/>
+<TextField
+name="email"
+placeholder="Email"
+label="Email"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].email}
+required
+/>
+<TextField
+name="phone"
+placeholder="Phone"
+label="Phone"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].phone}
+required
+/>
+<TextField
+name="address1"
+placeholder="Address1"
+label="Address1"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].address1}
+required
+/>
+<TextField
+name="city"
+placeholder="City"
+label="City"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].city}
+required
+/>
+<TextField
+name="state"
+placeholder="State"
+label="State"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].state}
+required
+/>
+<TextField
+name="text"
+placeholder="Text"
+label="Text"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].text}
+required
+/>
+<TextField
+name="url"
+placeholder="Web Address"
+label="Web Address"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].url}
+required
+/>
+<SelectField
+label="Category" name="category">
+<option value="For Sale">For Sale</option>
+<option value="For Rent">For Rent</option>
+<option value="For Lease">For Lease</option>
+<option value="Help Wanted">Help Wanted</option>
+<option value="Garage Sale">Garage Sale</option>
+<option value="Event">Event</option>
+defaultValue={items[itemIndex].category}
+</SelectField>
+<TextField
+name="latitude"
+id="latitude"
+placeholder="Latitude"
+label="Latitude"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].latitude}
+required
+/>
+<TextField
+name="longitude"
+id="longitude"
+placeholder="Longitude"
+label="Longitude"
+labelHidden
+variation="quiet"
+defaultValue={items[itemIndex].longitude}
+required
+/>
   
-  <View as="form" margin="3rem 0" onSubmit={updateItem}>
-    <Flex direction="column" justifyContent="center">
-      <TextField
-        name="title"
-        placeholder="Title"
-        label="Title"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].title}
-        required
-      />
-      <TextField
-        name="description"
-        placeholder="Description"
-        label="Description"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].description}
-        required
-      />
-      <TextField
-        name="price"
-        placeholder="Price"
-        label="Price"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].price}
-        required
-      />
-  <TextField
-        name="text"
-        placeholder="Text"
-        label="Text"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].text}
-        required
-      />
-      <TextField
-        name="email"
-        placeholder="Email"
-        label="Email"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].email}
-        required
-      />
-      <TextField
-        name="phone"
-        placeholder="Phone"
-        label="Phone"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].phone}
-        required
-      />
-        <TextField
-             name="address1"
-             placeholder="Address1"
-             label="Address1"
-             labelHidden
-             variation="quiet"
-             required
-           />
-           <TextField
-             name="city"
-             placeholder="City"
-             label="City"
-             labelHidden
-             variation="quiet"
-             required
-           />
-           <TextField
-             name="state"
-             placeholder="State"
-             label="State"
-             labelHidden
-             variation="quiet"
-             required
-           />
-      <TextField
-        name="text"
-        placeholder="Text"
-        label="Text"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].text}
-        required
-      />
-      <TextField
-        name="url"
-        placeholder="Web Address"
-        label="Web Address"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].url}
-        required
-      />
-      <SelectField
-       label="Category" name="category">
-  <option value="For Sale">For Sale</option>
-  <option value="For Rent">For Rent</option>
-  <option value="For Lease">For Lease</option>
-  <option value="Help Wanted">Help Wanted</option>
-  <option value="Garage Sale">Garage Sale</option>
-  <option value="Event">Event</option>
-  defaultValue={items[itemIndex].category}
-  </SelectField>
-      <TextField
-        name="latitude"
-        id="latitude"
-        placeholder="Latitude"
-        label="Latitude"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].latitude}
-
-      />
-      <TextField
-        name="longitude"
-        id="longitude"
-        placeholder="Longitude"
-        label="Longitude"
-        labelHidden
-        variation="quiet"
-        defaultValue={items[itemIndex].longitude}
-
-      />
-  <Image
+  {/* <Image
         src={items[itemIndex].image}
         alt=""
       />
@@ -1150,7 +1286,72 @@ async function updateItem(event){
         as="input"
         type="file"
         style={{ alignSelf: "end" }}
-      />
+      /> */}
+      <View
+        name="image"
+        as="input"
+        type="file"
+        style={styles}
+        onChange={handleChange}
+      />
+      <Flex direction="column" justifyContent="center">
+        <img src={previewFile} style={styles}/>
+      </Flex>
+      <Flex direction="column" justifyContent="center">
+        <img src={items[itemIndex].image} style={styles}/>
+      </Flex>
+      <View
+        name="image2"
+        as="input"
+        type="file"
+        style={styles}
+        onChange={handleChange2}
+      />
+      <Flex direction="column" justifyContent="center">
+        <img src={previewFile2} style={styles}/>
+      </Flex>
+      <Flex direction="column" justifyContent="center">
+        <img src={items[itemIndex].image2} style={styles}/>
+      </Flex>
+      <View
+        name="image3"
+        as="input"
+        type="file"
+        style={styles}
+        onChange={handleChange3}
+      />
+      <Flex direction="column" justifyContent="center">
+        <img src={previewFile3} style={styles}/>
+      </Flex>
+      <Flex direction="column" justifyContent="center">
+        <img src={items[itemIndex].image3} style={styles}/>
+      </Flex>
+      <View
+        name="image4"
+        as="input"
+        type="file"
+        style={styles}
+        onChange={handleChange4}
+      />
+      <Flex direction="column" justifyContent="center">
+        <img src={previewFile4} style={styles}/>
+      </Flex>
+      <Flex direction="column" justifyContent="center">
+        <img src={items[itemIndex].image4} style={styles}/>
+      </Flex>
+      <View
+        name="image5"
+        as="input"
+        type="file"
+        style={styles}
+        onChange={handleChange5}
+      />
+      <Flex direction="column" justifyContent="center">
+        <img src={previewFile5} style={styles}/>
+      </Flex>
+      <Flex direction="column" justifyContent="center">
+        <img src={items[itemIndex].image5} style={styles}/>
+      </Flex>
       <Button type="submit" variation="primary">
         Update Item
       </Button>
