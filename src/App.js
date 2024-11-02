@@ -75,6 +75,7 @@ const App = ({ signOut }) => {
   const [previewFile3, setPreviewFile3] = useState();
   const [previewFile4, setPreviewFile4] = useState();
   const [previewFile5, setPreviewFile5] = useState();
+  const [uploadProgress1, setUploadProgress1] = useState();  //if we want to track upload progress, use this per image
 
   // useEffect(() => {
   //   getLocation();
@@ -521,7 +522,12 @@ async function updateItem(event){
         data: file,
         options: {
           accessLevel: 'guest' // defaults to `guest` but can be 'private' | 'protected' | 'guest'
-          //onProgress // Optional progress callback.
+          // onProgress: ({ transferredBytes, totalBytes }) => {
+          //   if (totalBytes) {
+          //         const progress1 = Math.round((transferredBytes / totalBytes) * 100);
+          //         setUploadProgress1(progress1);
+          //       };
+          //   } 
         }
       }).result;
     }
