@@ -75,7 +75,12 @@ const App = ({ signOut }) => {
   const [previewFile3, setPreviewFile3] = useState();
   const [previewFile4, setPreviewFile4] = useState();
   const [previewFile5, setPreviewFile5] = useState();
-  const [uploadProgress1, setUploadProgress1] = useState();  //if we want to track upload progress, use this per image
+  const [uploadProgress1, setUploadProgress1] = useState();  //if we want to track upload progress, use this per image..not being used currently
+  const [file1Changed, setFile1Changed] = useState(false);
+  const [file2Changed, setFile2Changed] = useState(false);
+  const [file3Changed, setFile3Changed] = useState(false);
+  const [file4Changed, setFile4Changed] = useState(false);
+  const [file5Changed, setFile5Changed] = useState(false);
 
   // useEffect(() => {
   //   getLocation();
@@ -118,7 +123,7 @@ const App = ({ signOut }) => {
       setFile(image1);
       const previewImage1 = await resizeFileForPreview(file1);
       setPreviewFile(previewImage1);
-      console.log(image1);
+      setFile1Changed(true);
     }
     catch(err) {
       console.log(err);
@@ -131,7 +136,7 @@ const App = ({ signOut }) => {
       setFile2(image2);
       const previewImage2 = await resizeFileForPreview(file2);
       setPreviewFile2(previewImage2);
-      console.log(image2);
+      setFile2Changed(true);
     }
     catch(err) {
       console.log(err);
@@ -144,7 +149,7 @@ const App = ({ signOut }) => {
       setFile3(image3);
       const previewImage3 = await resizeFileForPreview(file3);
       setPreviewFile3(previewImage3);
-      console.log(image3);
+      setFile3Changed(true);
     }
     catch(err) {
       console.log(err);
@@ -157,7 +162,7 @@ const App = ({ signOut }) => {
       setFile4(image4);
       const previewImage4 = await resizeFileForPreview(file4);
       setPreviewFile4(previewImage4);
-      console.log(image4);
+      setFile4Changed(true);
     }
     catch(err) {
       console.log(err);
@@ -170,7 +175,7 @@ const App = ({ signOut }) => {
       setFile5(image5);
       const previewImage5 = await resizeFileForPreview(file5);
       setPreviewFile5(previewImage5);
-      console.log(image5);
+      setFile5Changed(true);
     }
     catch(err) {
       console.log(err);
@@ -508,7 +513,7 @@ async function updateItem(event){
     //userid: userId,
   };
 
-  if (!!data.image) 
+  if (!!data.image && file1Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
       var fileName;
@@ -531,7 +536,7 @@ async function updateItem(event){
         }
       }).result;
     }
-    if (!!data.image2) 
+    if (!!data.image2 && file2Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
       var fileName2;
@@ -549,7 +554,7 @@ async function updateItem(event){
         }
       }).result;
     }
-    if (!!data.image3) 
+    if (!!data.image3 && file3Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
       var fileName3;
@@ -567,7 +572,7 @@ async function updateItem(event){
         }
       }).result;
     }
-    if (!!data.image4) 
+    if (!!data.image4 && file4Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
       var fileName4;
@@ -585,7 +590,7 @@ async function updateItem(event){
         }
       }).result;
     }
-    if (!!data.image5) 
+    if (!!data.image5 && file5Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
       var fileName5;
@@ -608,6 +613,11 @@ async function updateItem(event){
     query: updateItemMutation,
     variables: { input: data },
   });
+  setFile1Changed(false);
+  setFile2Changed(false);
+  setFile3Changed(false);
+  setFile4Changed(false);
+  setFile5Changed(false);
   fetchMyItems();
   event.target.reset();
 }
