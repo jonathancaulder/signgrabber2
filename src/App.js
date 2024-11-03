@@ -512,6 +512,11 @@ async function updateItem(event){
       state: form.get("state"),
     //userid: userId,
   };
+console.log('image1 name' + image.name);
+console.log('image2 name' + image2.name);
+console.log('image3 name' + image3.name);
+console.log('image4 name' + image4.name);
+console.log('image5 name' + image5.name);
 
   if (!!data.image && file1Changed) 
     {
@@ -536,6 +541,11 @@ async function updateItem(event){
         }
       }).result;
     }
+    else
+    {
+      data.image = items[itemIndex].bucketkey;
+      data.bucketkey = items[itemIndex].bucketkey;
+    }
     if (!!data.image2 && file2Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -553,6 +563,11 @@ async function updateItem(event){
           //onProgress // Optional progress callback.
         }
       }).result;
+    }
+    else
+    {
+      data.image2 = items[itemIndex].bucketkey2;
+      data.bucketkey2 = items[itemIndex].bucketkey2;
     }
     if (!!data.image3 && file3Changed) 
     {
@@ -572,6 +587,11 @@ async function updateItem(event){
         }
       }).result;
     }
+    else
+    {
+      data.image3 = items[itemIndex].bucketkey3;
+      data.bucketkey3 = items[itemIndex].bucketkey3;
+    }
     if (!!data.image4 && file4Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -590,6 +610,11 @@ async function updateItem(event){
         }
       }).result;
     }
+    else
+    {
+      data.image4 = items[itemIndex].bucketkey4;
+      data.bucketkey4 = items[itemIndex].bucketkey4;
+    }
     if (!!data.image5 && file5Changed) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -607,6 +632,11 @@ async function updateItem(event){
           //onProgress // Optional progress callback.
         }
       }).result;
+    }
+    else
+    {
+      data.image5 = items[itemIndex].bucketkey5;
+      data.bucketkey5 = items[itemIndex].bucketkey5;
     }
 
   await client.graphql({
@@ -1310,9 +1340,11 @@ required
         style={styles}
         onChange={handleChange}
       />
+      {file1Changed &&
       <Flex direction="row" justifyContent="center">
         <img src={previewFile} style={styles}/>
       </Flex>
+      }
       <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image} style={styles}/>
       </Flex>
@@ -1323,9 +1355,11 @@ required
         style={styles}
         onChange={handleChange2}
       />
+      {file2Changed && 
       <Flex direction="row" justifyContent="center">
         <img src={previewFile2} style={styles}/>
       </Flex>
+      }
       <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image2} style={styles}/>
       </Flex>
@@ -1336,9 +1370,11 @@ required
         style={styles}
         onChange={handleChange3}
       />
+      {file3Changed && 
       <Flex direction="row" justifyContent="center">
         <img src={previewFile3} style={styles}/>
       </Flex>
+      }
       <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image3} style={styles}/>
       </Flex>
@@ -1349,9 +1385,11 @@ required
         style={styles}
         onChange={handleChange4}
       />
+      {file4Changed && 
       <Flex direction="row" justifyContent="center">
         <img src={previewFile4} style={styles}/>
       </Flex>
+      }
       <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image4} style={styles}/>
       </Flex>
@@ -1362,9 +1400,11 @@ required
         style={styles}
         onChange={handleChange5}
       />
+      {file5Changed && 
       <Flex direction="row" justifyContent="center">
         <img src={previewFile5} style={styles}/>
       </Flex>
+      }
       <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image5} style={styles}/>
       </Flex>
