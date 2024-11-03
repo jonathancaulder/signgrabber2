@@ -1300,10 +1300,10 @@ required
         style={styles}
         onChange={handleChange}
       />
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={previewFile} style={styles}/>
       </Flex>
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image} style={styles}/>
       </Flex>
       <View
@@ -1313,10 +1313,10 @@ required
         style={styles}
         onChange={handleChange2}
       />
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={previewFile2} style={styles}/>
       </Flex>
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image2} style={styles}/>
       </Flex>
       <View
@@ -1326,10 +1326,10 @@ required
         style={styles}
         onChange={handleChange3}
       />
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={previewFile3} style={styles}/>
       </Flex>
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image3} style={styles}/>
       </Flex>
       <View
@@ -1339,10 +1339,10 @@ required
         style={styles}
         onChange={handleChange4}
       />
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={previewFile4} style={styles}/>
       </Flex>
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image4} style={styles}/>
       </Flex>
       <View
@@ -1352,10 +1352,10 @@ required
         style={styles}
         onChange={handleChange5}
       />
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={previewFile5} style={styles}/>
       </Flex>
-      <Flex direction="column" justifyContent="center">
+      <Flex direction="row" justifyContent="center">
         <img src={items[itemIndex].image5} style={styles}/>
       </Flex>
       <Button type="submit" variation="primary">
