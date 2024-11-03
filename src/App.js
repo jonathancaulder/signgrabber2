@@ -37,6 +37,7 @@ import {
   SelectField,
   Badge,
   withAuthenticator,
+  Loader
 } from "@aws-amplify/ui-react";
 import { itemByEmailAndTitle, itemByLatitudeAndLongitude, itemsByEmail, itemsByUserid, listItems } from "./graphql/queries";
 import {
@@ -482,7 +483,7 @@ function getLocation() {
     setItems(itemsFromAPIUserID);
   }
 async function updateItem(event){
-  setUserAction("myitems");
+  setUserAction("loading");
   event.preventDefault();
   const form = new FormData(event.target);
     const image = form.get("image");
@@ -649,6 +650,7 @@ console.log('image5 name' + image5.name);
   setFile4Changed(false);
   setFile5Changed(false);
   fetchMyItems();
+  setUserAction("myitems");
   event.target.reset();
 }
   async function createItem(event) {
@@ -864,6 +866,12 @@ console.log('image5 name' + image5.name);
         <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>
       </Menu>
       <Heading level={1}>signGrabber</Heading>
+      {userAction == "loading" && 
+      <>
+      <Loader />
+      <Loader variation="linear" />
+    </>
+    }
       {userAction == "menu" &&
         <Heading padding="medium">Please select a menu option from above</Heading>
       }
