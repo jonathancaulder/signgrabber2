@@ -11,14 +11,14 @@ import { remove } from 'aws-amplify/storage';
 import Storage from 'aws-amplify/storage';
 import { getUrl } from "aws-amplify/storage";
 import { getCurrentUser } from 'aws-amplify/auth';
+
 import mapicon from './map.png'
 import phoneicon from './phone.png'
 import texticon from './text.png'
 import urlicon from './url.png'
 import emailicon from './email.png'
-
 import { UpdateMyItem } from './ui-components';
-import { autoSignIn, signOut } from "aws-amplify/auth";
+import { autoSignIn, signOut, signIn } from "aws-amplify/auth";
 import Resizer from "react-image-file-resizer";
 
 import {
@@ -61,9 +61,11 @@ const iconstyles = {
   paddingLeft: "20px",
   paddingRight: "20px",
 };
-const App = ({ signOut }) => {
+const App = () => {
   const [items, setItems] = useState([]);
   const [userAction, setUserAction] = useState("search");
+  const [nextUserAction, setNextUserAction] = useState("myitems");
+  
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
   const [file, setFile] = useState();
@@ -654,7 +656,7 @@ console.log('image5 name' + image5.name);
   event.target.reset();
 }
   async function createItem(event) {
-    setUserAction("create");
+    setNextUserAction("myitems");
     event.preventDefault();
     //return;
     const form = new FormData(event.target);
@@ -785,7 +787,8 @@ console.log('image5 name' + image5.name);
       query: createItemMutation,
       variables: { input: data },
     });
-    fetchItems();
+    //fetchItems();
+    setUserAction("createitemsuccess");
     event.target.reset();
   }
 
@@ -802,9 +805,17 @@ console.log('image5 name' + image5.name);
   }
   function showCreateItem() {
     //if not logged in, take to account page otherwise open for creation
-    getLocation();
-    setUserAction("create");
-    
+    if (!userid)
+      {
+        console.log('showing login in create');
+        setNextUserAction("create");
+        setUserAction("showlogin");
+      }
+      else
+      {
+        getLocation();
+        setUserAction("create");
+      }
   }
   function showFetchingItem() {
     
@@ -813,9 +824,18 @@ console.log('image5 name' + image5.name);
   }
   function showMyItems() {
     //if not logged in, take to account page otherwise open my items
+    if (!userid)
+    {
+      console.log('showing login');
+      setNextUserAction("myitems");
+      setUserAction("showlogin");
+    }
+    else
+    {
+      console.log('showing my items');
     fetchMyItems();
     setUserAction("myitems");
-    
+    }
   }
   function showUpdateItem(index) {
     setItemIndex(index);
@@ -827,11 +847,12 @@ console.log('image5 name' + image5.name);
   async function showSignOut(){
       try {
         await signOut();
+        setUserAction("signedout");
       } catch (error) {
         console.log('error signing out: ', error);
       }
     setUserID(null);
-    showFetchingItem();
+    //showFetchingItem();
   }
   function ismyitem(index)
   {
@@ -856,6 +877,31 @@ console.log('image5 name' + image5.name);
       window.open("https://maps.google.com/maps?daddr=" + addr1 + "," + city + " " + state + "&amp};ll=");
   }
   }
+  function showNextScreen() {
+    
+    setUserAction(nextUserAction);
+
+  }
+  async function mySignIn(event){
+        try {
+      event.preventDefault();
+      const formSignIn = new FormData(event.target);
+      const username = formSignIn.get("username");
+      const password = formSignIn.get("password");
+
+      const { isSignedIn, nextStep } = await signIn({username, password});
+      console.log('sign in fired');
+      if(isSignedIn)
+      {
+        const { username, userId, signInDetails } = await getCurrentUser();
+        setUserID(userId);
+        setUserAction("loginsuccess");
+        console.log(username, userId, signInDetails);
+      }
+    } catch (error) {
+      console.log('error signing in', error);
+    }
+  }
   return (
     
      <View className="App">
@@ -872,11 +918,64 @@ console.log('image5 name' + image5.name);
       <Loader variation="linear" />
     </>
     }
+    {userAction == "loginsuccess" && 
+      
+      <Flex direction="column" justifyContent="center">
+      <Heading padding="medium">Successful login!  Click OK to continue...</Heading>
+      <View as="form" margin="3rem 0" onSubmit={showNextScreen}>
+      <Button type="submit" variation="primary">
+             Ok
+           </Button>
+           
+        </View>
+       </Flex>
+    }
+    {userAction == "signedout" && 
+      
+      <Flex direction="column" justifyContent="center">
+      <Heading padding="medium">You have been logged out!  Click a menu option or close the window to exit...</Heading>
+       </Flex>
+    }
+    {userAction == "createitemsuccess" && 
+      
+      <Flex direction="column" justifyContent="center">
+      <Heading padding="medium">Item successfully created!  Click OK to continue...</Heading>
+      <View as="form" margin="3rem 0" onSubmit={showNextScreen}>
+      <Button type="submit" variation="primary">
+             Ok
+           </Button>
+           
+        </View>
+       </Flex>
+    }
       {userAction == "menu" &&
         <Heading padding="medium">Please select a menu option from above</Heading>
       }
-      {userAction == "create" && !userid && 
-        <autoSignIn/> }
+      {userAction == "showlogin"  && 
+        <View as="form" margin="3rem 0" onSubmit={mySignIn}>
+        <Flex direction="column" justifyContent="center">
+          <TextField
+            name="username"
+            placeholder="Username"
+            label="Username"
+            labelHidden
+            variation="quiet"
+            required
+          />
+          <TextField
+            name="password"
+            placeholder="Password"
+            label="Password"
+            labelHidden
+            variation="quiet"
+            required
+          /> 
+          <Button type="submit" variation="primary">
+             Login
+           </Button>
+          </Flex>
+          </View>
+          }
       {userAction == "create" &&
         <View as="form" margin="3rem 0" onSubmit={createItem}>
          <Flex direction="column" justifyContent="center">
@@ -1431,4 +1530,4 @@ required
    );
 };
 
-export default withAuthenticator(App);
+export default App;
