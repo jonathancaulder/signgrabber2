@@ -18,7 +18,7 @@ import texticon from './text.png'
 import urlicon from './url.png'
 import emailicon from './email.png'
 import { UpdateMyItem } from './ui-components';
-import { autoSignIn, signOut, signIn } from "aws-amplify/auth";
+import { autoSignIn, signOut, signIn, signUp, SignUpParameters, confirmSignUp } from "aws-amplify/auth";
 import Resizer from "react-image-file-resizer";
 
 import {
@@ -68,6 +68,7 @@ const App = () => {
   
  const [itemIndex, setItemIndex] = useState(0);
   const [userid, setUserID] = useState("");
+  const [username, setUserName] = useState("");
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
   const [file3, setFile3] = useState();
@@ -822,6 +823,11 @@ console.log('image5 name' + image5.name);
     getLocation();
     setUserAction("search");
   }
+  function showCreateAccount() {
+    
+    setUserAction("createaccount");
+
+  }
   function showMyItems() {
     //if not logged in, take to account page otherwise open my items
     if (!userid)
@@ -902,6 +908,52 @@ console.log('image5 name' + image5.name);
       console.log('error signing in', error);
     }
   }
+
+  async function mySignUp(event ) {
+    try {
+      event.preventDefault();
+      const formSignUp = new FormData(event.target);
+      const username = formSignUp.get("username");
+      const password = formSignUp.get("password");
+      const { isSignUpComplete, userId, nextStep } = await signUp({
+        username,
+        password,
+      });
+      const { myusername, myuserId, signInDetails } = await getCurrentUser();
+      setUserName(myusername);
+      setUserID(myuserId);
+      setUserAction("signupconfirm");
+      console.log(myuserId);
+      console.log(username);
+    } catch (error) {
+      console.log('error signing up:', error);
+    }
+  }
+  function reenterConfirmationCode() {
+    
+    setUserAction("signupconfirm");
+
+  }
+  async function mySignUpConfirm(event) {
+    try {
+      event.preventDefault();
+      const formSignUpConfirm = new FormData(event.target);
+      const confirmationCode = formSignUpConfirm.get("confirmationCode");
+      const { isSignUpComplete, nextStep } = await confirmSignUp({
+        username,
+        confirmationCode
+      });
+      if(isSignUpComplete)
+      {
+        setUserAction("signupcomplete");
+        const { username, newuserid, signInDetails } = await getCurrentUser();
+        setUserID(newuserid);
+      }
+    } catch (error) {
+      setUserAction("signupconfirmfail");
+      console.log('error confirming sign up', error);
+    }
+  }
   return (
     
      <View className="App">
@@ -951,6 +1003,31 @@ console.log('image5 name' + image5.name);
       {userAction == "menu" &&
         <Heading padding="medium">Please select a menu option from above</Heading>
       }
+      {userAction == "createaccount"  && 
+        <View as="form" margin="3rem 0" onSubmit={mySignUp}>
+        <Flex direction="column" justifyContent="center">
+          <TextField
+            name="username"
+            placeholder="Username"
+            label="Username"
+            labelHidden
+            variation="quiet"
+            required
+          />
+          <TextField
+            name="password"
+            placeholder="Password"
+            label="Password"
+            labelHidden
+            variation="quiet"
+            required
+          /> 
+          <Button type="submit" variation="primary">
+             Create Account
+           </Button>
+          </Flex>
+          </View>
+          }
       {userAction == "showlogin"  && 
         <View as="form" margin="3rem 0" onSubmit={mySignIn}>
         <Flex direction="column" justifyContent="center">
@@ -973,8 +1050,41 @@ console.log('image5 name' + image5.name);
           <Button type="submit" variation="primary">
              Login
            </Button>
+           <Button onClick={showCreateAccount}>
+             Create Account
+           </Button>
           </Flex>
           </View>
+          }
+          {userAction == "signupconfirm"  && 
+        <View as="form" margin="3rem 0" onSubmit={mySignUpConfirm}>
+        <Flex direction="column" justifyContent="center">
+          <TextField
+            name="confirmationCode"
+            placeholder="confirmation Code from Email"
+            label="Confirmation Code"
+            labelHidden
+            variation="quiet"
+            required
+          />
+          <Button type="submit" variation="primary">
+             Ok
+           </Button>
+          </Flex>
+          </View>
+          }
+          {userAction == "signupcomplete"  && 
+         <Flex direction="column" justifyContent="center">
+         <Heading padding="medium">Account created for {username}!  Click a menu option above...</Heading>
+          </Flex>
+          }
+          {userAction == "signupconfirmfail"  && 
+         <Flex direction="column" justifyContent="center">
+         <Heading padding="medium">The confirmation code entered was incorrect or another error occurred!  Please check the code in your email and try again...</Heading>
+         <Button onClick={reenterConfirmationCode}>
+             Try Again
+           </Button>
+          </Flex>
           }
       {userAction == "create" &&
         <View as="form" margin="3rem 0" onSubmit={createItem}>
