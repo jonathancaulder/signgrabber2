@@ -915,15 +915,21 @@ console.log('image5 name' + image5.name);
       const formSignUp = new FormData(event.target);
       const username = formSignUp.get("username");
       const password = formSignUp.get("password");
-      const { isSignUpComplete, userId, nextStep } = await signUp({
+      console.log(username);
+      console.log(password);
+      const { isSignUpComplete, userID, nextStep } = await signUp({
         username,
         password,
+        options: {
+          autoSignIn: true // or SignInOptions e.g { authFlowType: "USER_SRP_AUTH" }
+        }
       });
-      const { myusername, myuserId, signInDetails } = await getCurrentUser();
-      setUserName(myusername);
-      setUserID(myuserId);
+      console.log("signupcompleteonserver");
+      //const { curusername, curuserid, signInDetails } = await getCurrentUser();
+      setUserName(username);
+      setUserID(userID);
       setUserAction("signupconfirm");
-      console.log(myuserId);
+      console.log(userID);
       console.log(username);
     } catch (error) {
       console.log('error signing up:', error);
@@ -946,8 +952,8 @@ console.log('image5 name' + image5.name);
       if(isSignUpComplete)
       {
         setUserAction("signupcomplete");
-        const { username, newuserid, signInDetails } = await getCurrentUser();
-        setUserID(newuserid);
+        //const { username, userid, signInDetails } = await getCurrentUser();
+        //setUserID(userid);
       }
     } catch (error) {
       setUserAction("signupconfirmfail");
