@@ -85,7 +85,7 @@ const App = () => {
   const [file3Changed, setFile3Changed] = useState(false);
   const [file4Changed, setFile4Changed] = useState(false);
   const [file5Changed, setFile5Changed] = useState(false);
-
+  const [mapdata, setMapData] = useState(null);
   // useEffect(() => {
   //   getLocation();
   //   //fetchItems();
@@ -336,8 +336,8 @@ function getLocation() {
  function showPosition(position) {
   curLatitude = Math.round(position.coords.latitude * 100) ;
   curLongitude = Math.round(position.coords.longitude * 100);
-  //console.log("Latitude: " + position.coords.latitude +
-  //"Longitude: " + position.coords.longitude)
+  console.log("Latitude: " + Math.round(position.coords.latitude * 100) +
+  "Longitude: " + Math.round(position.coords.longitude * 100))
   fetchItems();
 }
 
@@ -521,6 +521,17 @@ console.log('image2 name' + image2.name);
 console.log('image3 name' + image3.name);
 console.log('image4 name' + image4.name);
 console.log('image5 name' + image5.name);
+
+var encodedAddress = data.address1 + ' ' + data.city + ' ' + data.state
+
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&region=us&key=AIzaSyD58o93IdMqXjx8Uacu9H3LlhOsETQF_rA')
+      .then(response => response.json())
+      .then(json => setMapData(json))
+      .catch(error => console.error(error));
+      var string = JSON.stringify(mapdata);
+      var mapValue = JSON.parse(string);
+      data.latitude = Math.round(mapValue.results["0"].geometry.location.lat * 100);
+      data.longitude = Math.round(mapValue.results["0"].geometry.location.lng * 100);
 
   if (!!data.image && file1Changed) 
     {
@@ -712,6 +723,11 @@ console.log('image5 name' + image5.name);
         }
       }).result;
     }
+    else
+    {
+      data.image = "noimage.jpg";
+      data.bucketkey = "noimage.jpg";
+    }
     if (!!data.image2) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -729,6 +745,11 @@ console.log('image5 name' + image5.name);
           //onProgress // Optional progress callback.
         }
       }).result;
+    }
+    else
+    {
+      data.image2 = "noimage.jpg";
+      data.bucketkey2 = "noimage.jpg";
     }
     if (!!data.image3) 
     {
@@ -748,6 +769,11 @@ console.log('image5 name' + image5.name);
         }
       }).result;
     }
+    else
+    {
+      data.image3 = "noimage.jpg";
+      data.bucketkey3 = "noimage.jpg";
+    }
     if (!!data.image4) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -766,6 +792,11 @@ console.log('image5 name' + image5.name);
         }
       }).result;
     }
+    else
+    {
+      data.image4 = "noimage.jpg";
+      data.bucketkey4 = "noimage.jpg";
+    }
     if (!!data.image5) 
     {
       const { v4: uuidv4 } = require('uuid');
@@ -783,6 +814,11 @@ console.log('image5 name' + image5.name);
           //onProgress // Optional progress callback.
         }
       }).result;
+    }
+    else
+    {
+      data.image5 = "noimage.jpg";
+      data.bucketkey5 = "noimage.jpg";
     }
     await client.graphql({
       query: createItemMutation,
@@ -850,6 +886,9 @@ console.log('image5 name' + image5.name);
     
   }
 
+  function showSignIn(){
+    setUserAction("showlogin");
+  }
   async function showSignOut(){
       try {
         await signOut();
@@ -967,7 +1006,8 @@ console.log('image5 name' + image5.name);
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
         <MenuItem onClick={() => showCreateItem()}>Create</MenuItem>
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
-        <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>
+        {!userid && <MenuItem onClick={() => showSignIn()}>Log In</MenuItem>}
+        {userid && <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>}
       </Menu>
       <Heading level={1}>signGrabber</Heading>
       {userAction == "loading" && 
