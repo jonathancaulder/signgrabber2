@@ -11,10 +11,6 @@ import { remove } from 'aws-amplify/storage';
 import Storage from 'aws-amplify/storage';
 import { getUrl } from "aws-amplify/storage";
 import { getCurrentUser } from 'aws-amplify/auth';
-import {
-  SecretsManagerClient,
-  GetSecretValueCommand,
-} from "@aws-sdk/client-secrets-manager";
 
 import mapicon from './map.png'
 import phoneicon from './phone.png'
@@ -51,6 +47,8 @@ import {
 } from "./graphql/mutations";
 import * as amplifyconfig from './amplifyconfiguration.json';
 import {Amplify} from 'aws-amplify';
+import { SecretsManagerClient, GetSecretValueCommand } from "@aws-sdk/client-secrets-manager";
+
 Amplify.configure(amplifyconfig);
 
 const client = generateClient();
@@ -93,7 +91,7 @@ const App = () => {
 
   const secret_name = "GoogleGeocodingAPIKey";
 
-const client = new SecretsManagerClient({
+const secretclient = new SecretsManagerClient({
   region: "us-east-1",
 });
 
@@ -347,8 +345,8 @@ function getLocation() {
  function showPosition(position) {
   curLatitude = Math.round(position.coords.latitude * 100) ;
   curLongitude = Math.round(position.coords.longitude * 100);
-  console.log("Latitude: " + Math.round(position.coords.latitude * 100) +
-  "Longitude: " + Math.round(position.coords.longitude * 100))
+  // console.log("Latitude: " + Math.round(position.coords.latitude * 100) +
+  // "Longitude: " + Math.round(position.coords.longitude * 100));
   fetchItems();
 }
 
@@ -537,7 +535,7 @@ var encodedAddress = data.address1 + ' ' + data.city + ' ' + data.state
 let response;
 
 try {
-  response = await client.send(
+  response = await secretclient.send(
     new GetSecretValueCommand({
       SecretId: secret_name,
       VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
