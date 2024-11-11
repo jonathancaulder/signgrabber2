@@ -11,6 +11,10 @@ import { remove } from 'aws-amplify/storage';
 import Storage from 'aws-amplify/storage';
 import { getUrl } from "aws-amplify/storage";
 import { getCurrentUser } from 'aws-amplify/auth';
+import {
+  SecretsManagerClient,
+  GetSecretValueCommand,
+} from "@aws-sdk/client-secrets-manager";
 
 import mapicon from './map.png'
 import phoneicon from './phone.png'
@@ -86,6 +90,13 @@ const App = () => {
   const [file4Changed, setFile4Changed] = useState(false);
   const [file5Changed, setFile5Changed] = useState(false);
   const [mapdata, setMapData] = useState(null);
+
+  const secret_name = "GoogleGeocodingAPIKey";
+
+const client = new SecretsManagerClient({
+  region: "us-east-1",
+});
+
   // useEffect(() => {
   //   getLocation();
   //   //fetchItems();
@@ -523,8 +534,24 @@ console.log('image4 name' + image4.name);
 console.log('image5 name' + image5.name);
 
 var encodedAddress = data.address1 + ' ' + data.city + ' ' + data.state
+let response;
 
-    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&region=us&key=AIzaSyD58o93IdMqXjx8Uacu9H3LlhOsETQF_rA')
+try {
+  response = await client.send(
+    new GetSecretValueCommand({
+      SecretId: secret_name,
+      VersionStage: "AWSCURRENT", // VersionStage defaults to AWSCURRENT if unspecified
+    })
+  );
+} catch (error) {
+  // For a list of exceptions thrown, see
+  // https://docs.aws.amazon.com/secretsmanager/latest/apireference/API_GetSecretValue.html
+  throw error;
+}
+
+const secret = response.SecretString;
+
+    fetch('https://maps.googleapis.com/maps/api/geocode/json?address=' + encodedAddress + '&region=us&key=' + secret)
       .then(response => response.json())
       .then(json => setMapData(json))
       .catch(error => console.error(error));
