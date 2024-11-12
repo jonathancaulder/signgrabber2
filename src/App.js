@@ -69,8 +69,8 @@ const App = () => {
   const [nextUserAction, setNextUserAction] = useState("myitems");
   
  const [itemIndex, setItemIndex] = useState(0);
-  const [userid, setUserID] = useState("");
-  const [username, setUserName] = useState("");
+  const [userid, setUserID] = useState("nothing");
+  const [username, setUserName] = useState("nothing");
   const [file, setFile] = useState();
   const [file2, setFile2] = useState();
   const [file3, setFile3] = useState();
@@ -88,7 +88,6 @@ const App = () => {
   const [file4Changed, setFile4Changed] = useState(false);
   const [file5Changed, setFile5Changed] = useState(false);
   const [mapdata, setMapData] = useState(null);
-
   const secret_name = "GoogleGeocodingAPIKey";
 
 const secretclient = new SecretsManagerClient({
@@ -706,7 +705,7 @@ const secret = response.SecretString;
 
     const { username, userId, signInDetails } = await getCurrentUser();
     //alert(userId);
- 
+    setUserID(userId);
 
     const data = {
       title: form.get("title"),
@@ -867,7 +866,7 @@ const secret = response.SecretString;
   }
   function showCreateItem() {
     //if not logged in, take to account page otherwise open for creation
-    if (!userid)
+    if (userid === 'nothing') 
       {
         console.log('showing login in create');
         setNextUserAction("create");
@@ -877,7 +876,7 @@ const secret = response.SecretString;
       {
         getLocation();
         setUserAction("create");
-      }
+      } 
   }
   function showFetchingItem() {
     
@@ -891,17 +890,18 @@ const secret = response.SecretString;
   }
   function showMyItems() {
     //if not logged in, take to account page otherwise open my items
-    if (!userid)
-    {
-      console.log('showing login');
-      setNextUserAction("myitems");
-      setUserAction("showlogin");
-    }
-    else
-    {
-      console.log('showing my items');
-    fetchMyItems();
-    setUserAction("myitems");
+    
+    if (userid === 'nothing') 
+      {
+        console.log('showing login');
+        setNextUserAction("myitems");
+        setUserAction("showlogin");
+      }
+      else
+      {
+        console.log('showing my items abc');
+        fetchMyItems();
+        setUserAction("myitems");
     }
   }
   function showUpdateItem(index) {
@@ -921,7 +921,7 @@ const secret = response.SecretString;
       } catch (error) {
         console.log('error signing out: ', error);
       }
-    setUserID(null);
+    setUserID('nothing');
     //showFetchingItem();
   }
   function ismyitem(index)
@@ -958,7 +958,8 @@ const secret = response.SecretString;
       const formSignIn = new FormData(event.target);
       const username = formSignIn.get("username");
       const password = formSignIn.get("password");
-
+      await signOut();
+      setUserID("nothing");
       const { isSignedIn, nextStep } = await signIn({username, password});
       console.log('sign in fired');
       if(isSignedIn)
@@ -1031,8 +1032,9 @@ const secret = response.SecretString;
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
         <MenuItem onClick={() => showCreateItem()}>Create</MenuItem>
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
-        {!userid && <MenuItem onClick={() => showSignIn()}>Log In</MenuItem>}
-        {userid && <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>}
+        {userid === 'nothing' && <MenuItem onClick={() => showSignIn()}>Log In</MenuItem>}
+        {userid !== 'nothing' && <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>}
+        
       </Menu>
       <Heading level={1}>signGrabber</Heading>
       {userAction == "loading" && 
