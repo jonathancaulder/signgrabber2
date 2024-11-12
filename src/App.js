@@ -11,7 +11,6 @@ import { remove } from 'aws-amplify/storage';
 import Storage from 'aws-amplify/storage';
 import { getUrl } from "aws-amplify/storage";
 import { getCurrentUser } from 'aws-amplify/auth';
-
 import mapicon from './map.png'
 import phoneicon from './phone.png'
 import texticon from './text.png'
@@ -431,6 +430,7 @@ function getLocation() {
   }
 
   async function fetchMyItems() {
+ 
     const { username, userId, signInDetails } = await getCurrentUser();
     setUserID(userId);
 
