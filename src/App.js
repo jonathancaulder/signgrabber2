@@ -16,6 +16,7 @@ import phoneicon from './phone.png'
 import texticon from './text.png'
 import urlicon from './url.png'
 import emailicon from './email.png'
+import sgbannericon from './signGrabberBanner.jpg'
 import { UpdateMyItem } from './ui-components';
 import { autoSignIn, signOut, signIn, signUp, SignUpParameters, confirmSignUp } from "aws-amplify/auth";
 import Resizer from "react-image-file-resizer";
@@ -1028,7 +1029,9 @@ const secret = response.SecretString;
   return (
     
      <View className="App">
-      <Menu>
+      <div style={{ backgroundColor: 'yellow' }}>
+      
+      <Menu style={{ backgroundColor: 'white' }}>
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
         <MenuItem onClick={() => showCreateItem()}>Create</MenuItem>
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
@@ -1036,7 +1039,8 @@ const secret = response.SecretString;
         {userid !== 'nothing' && <MenuItem onClick={() => showSignOut()}>Log Out</MenuItem>}
         
       </Menu>
-      <Heading level={1}>signGrabber</Heading>
+      <img src={sgbannericon} width = "100%"></img>
+      </div>
       {userAction == "loading" && 
       <>
       <Loader />
