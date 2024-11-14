@@ -1029,7 +1029,7 @@ const secret = response.SecretString;
   return (
     
      <View className="App">
-      <div style={{ backgroundColor: 'yellow' }}>
+      <div style={{ backgroundColor: 'white' }}>
       
       <Menu style={{ backgroundColor: 'white' }}>
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
