@@ -28,6 +28,7 @@ import {
   Image,
   Text,
   TextField,
+  TextAreaField,
   PasswordField,
   View,
   Menu,
@@ -1030,9 +1031,9 @@ const secret = response.SecretString;
   return (
     
      <View className="App">
-      <div style={{ backgroundColor: 'white' }}>
+      <div>
       
-      <Menu style={{ backgroundColor: 'white' }}>
+      <Menu>
         <MenuItem onClick={() => showFetchingItem()}>Search</MenuItem>
         <MenuItem onClick={() => showCreateItem()}>Create</MenuItem>
         <MenuItem onClick={() => showMyItems()}>My Items</MenuItem>
@@ -1427,7 +1428,10 @@ const secret = response.SecretString;
         </Flex>
         <Divider padding="xs" />
         <Heading padding="medium">{item.title}</Heading>
-        <Heading padding="small">{item.description}</Heading>
+        <TextAreaField
+         size="small"
+         defaultValue={item.description}
+        ></TextAreaField>
         <Heading >
         <a style={iconstyles} href={`tel:${item.phone}`}><img  src={phoneicon} width = "25" height = "25"></img></a>
         <a style={iconstyles} href={`sms:${item.text}`}><img  src={texticon} width = "25" height = "25"></img></a>
