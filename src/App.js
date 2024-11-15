@@ -28,6 +28,7 @@ import {
   Image,
   Text,
   TextField,
+  PasswordField,
   View,
   Menu,
   MenuItem,
@@ -1091,7 +1092,7 @@ const secret = response.SecretString;
             variation="quiet"
             required
           />
-          <TextField
+          <PasswordField
             name="password"
             placeholder="Password"
             label="Password"
@@ -1116,7 +1117,7 @@ const secret = response.SecretString;
             variation="quiet"
             required
           />
-          <TextField
+          <PasswordField
             name="password"
             placeholder="Password"
             label="Password"
