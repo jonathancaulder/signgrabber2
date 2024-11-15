@@ -1430,7 +1430,9 @@ const secret = response.SecretString;
         <Heading padding="medium">{item.title}</Heading>
         <TextAreaField
          size="small"
-         defaultValue={item.description}
+          isReadOnly={true}
+          value={item.description}
+          padding="xs"
         ></TextAreaField>
         <Heading >
         <a style={iconstyles} href={`tel:${item.phone}`}><img  src={phoneicon} width = "25" height = "25"></img></a>
