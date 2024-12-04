@@ -1232,7 +1232,7 @@ async function updateStatusToDeleted(){
            {userAction == "flag"  && 
          <Flex direction="column" justifyContent="center">
          <Heading padding="medium">Flag the listing with title: {items[itemIndex].title}?</Heading>
-         <Button variation="primary" colorTheme="warning" onClick={confirmFlag}>
+         <Button variation="primary" colorTheme="error" onClick={confirmFlag}>
              Yes, Flag this!
            </Button>
           <Button variation="primary" onClick={cancelFlag}>
@@ -1243,7 +1243,7 @@ async function updateStatusToDeleted(){
           {userAction == "delete"  && 
          <Flex direction="column" justifyContent="center">
          <Heading padding="medium">Delete the listing with title: {items[itemIndex].title}?</Heading>
-         <Button variation="primary" colorTheme="warning" onClick={confirmDelete}>
+         <Button variation="primary" colorTheme="error" onClick={confirmDelete}>
              Yes, delete this!
            </Button>
           <Button variation="primary" onClick={cancelDelete}>
@@ -1540,7 +1540,7 @@ async function updateStatusToDeleted(){
         {!ismyitem(index) && 
         <View>
           <br></br>
-          <Button variation="primary" colorTheme="warning" isFullWidth onClick = {() => showFlagListing(index)}>
+          <Button variation="primary" colorTheme="error" isFullWidth onClick = {() => showFlagListing(index)}>
             Flag Listing
           </Button>
           </View>
