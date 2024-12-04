@@ -378,6 +378,7 @@ function getLocation() {
     //add all the returned data into a single array and show it
     itemsFromAPIEqualLat=itemsFromAPIEqualLat.concat(itemsFromAPIPlusOneLat);
     itemsFromAPIEqualLat=itemsFromAPIEqualLat.concat(itemsFromAPIMinusOneLat);
+    itemsFromAPIEqualLat = itemsFromAPIEqualLat.filter(item => item.status > -5);
 
     await Promise.all(
       itemsFromAPIEqualLat.map(async (item) => {
@@ -694,6 +695,36 @@ const secret = response.SecretString;
   setUserAction("myitems");
   event.target.reset();
 }
+async function updateStatusToFlagged(){
+
+  const data = {
+    id: items[itemIndex].id,
+    status: parseInt(items[itemIndex].status)-1,
+  };
+
+  await client.graphql({
+    query: updateItemMutation,
+    variables: { input: data },
+  });
+
+  setUserAction("search");
+}
+
+async function updateStatusToDeleted(){
+
+  const data = {
+    id: items[itemIndex].id,
+    status: -10,
+  };
+
+  await client.graphql({
+    query: updateItemMutation,
+    variables: { input: data },
+  });
+
+  setUserAction("myitems");
+}
+
   async function createItem(event) {
     setNextUserAction("myitems");
     event.preventDefault();
@@ -913,7 +944,18 @@ const secret = response.SecretString;
     setUserAction("update");
     
   }
-
+  function showFlagListing(index) {
+    setItemIndex(index);
+    //console.log(index);
+    setUserAction("flag");
+    
+  }
+  function showDeleteListing(index) {
+    setItemIndex(index);
+    //console.log(index);
+    setUserAction("delete");
+    
+  }
   function showSignIn(){
     setUserAction("showlogin");
   }
@@ -1007,6 +1049,28 @@ const secret = response.SecretString;
     
     setUserAction("signupconfirm");
 
+  }
+  function confirmFlag() {
+    
+    //setUserAction("signupconfirm");
+    updateStatusToFlagged();
+    alert('Flag confirmed');
+  }
+  function cancelFlag() {
+    
+    //setUserAction("signupconfirm");
+    alert('Flag cancelled');
+  }
+  function confirmDelete() {
+    
+    //setUserAction("signupconfirm");
+    updateStatusToDeleted();
+    alert('Delete confirmed');
+  }
+  function cancelDelete() {
+    
+    //setUserAction("signupconfirm");
+    alert('Delete cancelled');
   }
   async function mySignUpConfirm(event) {
     try {
@@ -1162,6 +1226,28 @@ const secret = response.SecretString;
          <Heading padding="medium">The confirmation code entered was incorrect or another error occurred!  Please check the code in your email and try again...</Heading>
          <Button onClick={reenterConfirmationCode}>
              Try Again
+           </Button>
+          </Flex>
+          }
+           {userAction == "flag"  && 
+         <Flex direction="column" justifyContent="center">
+         <Heading padding="medium">Flag the listing with title: {items[itemIndex].title}?</Heading>
+         <Button variation="primary" colorTheme="warning" onClick={confirmFlag}>
+             Yes, Flag this!
+           </Button>
+          <Button variation="primary" onClick={cancelFlag}>
+             Cancel
+           </Button>
+          </Flex>
+          }
+          {userAction == "delete"  && 
+         <Flex direction="column" justifyContent="center">
+         <Heading padding="medium">Delete the listing with title: {items[itemIndex].title}?</Heading>
+         <Button variation="primary" colorTheme="warning" onClick={confirmDelete}>
+             Yes, delete this!
+           </Button>
+          <Button variation="primary" onClick={cancelDelete}>
+             Cancel
            </Button>
           </Flex>
           }
@@ -1390,7 +1476,7 @@ const secret = response.SecretString;
         rewind: true,
         gap   : '1rem',
       } }
-      aria-label="My Favorite Images"
+      aria-label="Images"
       >
       <SplideSlide>
         <img src={item.image} alt="Image 1" style={styles}/>
@@ -1445,6 +1531,19 @@ const secret = response.SecretString;
           <Button variation="primary" isFullWidth onClick = {() => showUpdateItem(index)}>
             Edit
           </Button>
+        }
+        {ismyitem(index) &&
+          <Button variation="primary" colorTheme="error" isFullWidth onClick = {() => showDeleteListing(index)}>
+          Delete
+        </Button>
+        }
+        {!ismyitem(index) && 
+        <View>
+          <br></br>
+          <Button variation="primary" colorTheme="warning" isFullWidth onClick = {() => showFlagListing(index)}>
+            Flag Listing
+          </Button>
+          </View>
         }
       </View>
     </Card>
